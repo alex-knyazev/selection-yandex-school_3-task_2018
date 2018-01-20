@@ -1,0 +1,204 @@
+
+.dateAndHours .dateColumn {
+  display: flex;
+  position: initial;
+  box-sizing: border-box;
+  grid-area: dateColumn;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 12;
+  background-color: white;
+  border-top: 1px solid rgb(240,240,240);
+  border-bottom: 1px solid rgb(240,240,240);
+}
+
+@media screen and (max-width: 764px) {
+  .dateAndHours .dateColumn {
+    position: fixed;
+    z-index: 13;
+    width: 100%;
+    height: 56px;
+    transition: top 0.5s linear;
+  }
+}
+
+.dateAndHours .dateColumn .buttonNextDate, .buttonPreviousDate {
+  width: 24px;
+  height: 24px;
+  background: rgb(233, 236, 239);
+  border-radius: 100px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+.dateAndHours .dateColumn .buttonNextDate:hover, 
+.dateAndHours .dateColumn .buttonPreviousDate:hover {
+  background-color: rgb(190, 192, 194);
+}
+
+.dateAndHours .dateColumn .buttonNextDate img, 
+.dateAndHours .dateColumn .buttonPreviousDate img {
+  margin-top: 7px;
+  width: 10px;
+  height: 10px;
+  transform: scale(1.2)
+}
+
+.dateAndHours .dateColumn .choosedDate {
+  box-sizing: border-box;
+  width: 146px;
+  padding: 5px 13.5px;
+  font-family: HelveticaNeue, Open Sans, sans-serif;
+  font-size: 15px;
+  color: #000000;
+  letter-spacing: 0;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+}
+.dateAndHours .dateColumn .choosedDate:hover {
+  border-radius: 100px;
+  background-color: rgba(190, 192, 194, 0.2);
+}
+
+.threeMonthsCalendar {
+  position: absolute;
+  margin-top: 12px;
+  box-shadow: 0 1px 16px rgba(0,0,0,0.2);
+  background-color: white;
+  width: 735px;
+  height: 260px;
+  border-radius: 6px;
+}
+.dateColumn .DayPicker-wrapper {
+  margin-top: 20px;
+  outline: none;
+}
+.dateColumn .DayPicker-Months {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  flex-wrap: nowrap;
+  font-size: 0.8em;
+}
+.dateColumn .DayPicker-Month {
+  margin: 0 0.7rem;
+}
+.dateColumn .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  background-color: #007DFF;
+  border-radius: 100%;
+}
+@media screen and (min-width: 765px) and (max-width: 1024px)  {
+  .threeMonthsCalendar {
+    margin-left: -20px;
+    width: 700px;
+    height: 240px;
+  }
+  .dateColumn .DayPicker-Months {
+    margin: 10px 10px;
+    flex-wrap: nowrap;
+    font-size: 0.7em;
+  }
+  .dateColumn .DayPicker-Month {
+    margin: 0 0.3rem;
+  }
+}
+@media screen and (max-width: 764px)  {
+  .threeMonthsCalendar {
+    width: 100%;
+    height: max-content;
+    left: 0px;
+  }
+  .dateColumn .DayPicker-Months {
+    margin: 10px 10px;
+    padding: 0px;
+    font-size: 0.8em;
+    flex-wrap: wrap;
+  }
+  .dateColumn .DayPicker-Month {
+    display: block;
+  }
+  .DayPicker-NavButton {
+    top: 1px;
+  }
+}
+
+
+.dateAndHours .hoursColumn {
+  grid-area: hoursColumn;
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  border-top: 1px solid rgb(240,240,240);
+  border-bottom: 1px solid rgb(240,240,240);
+}
+@media screen and (max-width: 764px) {
+  .dateAndHours .hoursColumn {
+    width: var(--mobile-right-column-width);
+    height: 32px;
+  }
+}
+
+.dateAndHours .hoursColumn .hour {
+  flex-grow: 1;
+  height: 13px;
+  font-family: HelveticaNeue, Open Sans, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #858E98;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+.dateAndHours .hoursColumn .hour:first-child {
+  margin-left: -3px;
+}
+
+
+.dateAndHours .hoursColumn .currentTime {
+  width: 6.29%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+.dateAndHours .hoursColumn .currentTime .time {
+  width: 49px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background: #007DFF;
+  border-radius: 100px;
+  font-family:  HelveticaNeue, Open Sans, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+
+.dateAndHours .hoursColumn .currentTime .timeLine {
+  position: absolute;
+  left: 50%;
+  border-top: 1px solid #007DFF;
+  border-right: 1px solid #007DFF;
+  height: 100vh;
+  z-index: 10;
+}
+
+.emptyWhite {
+  display: none;
+}
+@media screen and (max-width: 764px) {
+  .emptyWhite  {
+    display: block;
+    background-color: white;
+    grid-area: emptyWhite;
+    z-index: 2;
+    border-top: 1px solid rgb(240,240,240);
+    border-bottom: 1px solid rgb(240,240,240);
+    box-sizing: border-box;
+  }
+}

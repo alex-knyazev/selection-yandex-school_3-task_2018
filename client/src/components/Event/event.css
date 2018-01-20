@@ -1,0 +1,495 @@
+.editEvent {
+  height: calc(100% - 71px);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  z-index: 1;
+}
+
+.editEventGrid {
+  display: grid;  
+  grid-template-columns: 15%  1fr 1fr 15%;
+  grid-template-rows: auto auto 1fr;
+  grid-row-gap: 20px;
+  grid-template-areas: 
+    ". editEventPageTitle  editEventPageTitle ."
+    ". inputEventTheme chooseDateAndTime ."
+    ". selectEventMembers choosedRoom .";
+  font-family: HelveticaNeue, Open-sans, sans-serif;
+  z-index: 1;
+} 
+@media screen and (min-width: 765px) and (max-width: 1024px)  {
+  .editEventGrid {
+    grid-template-columns: 5%  1fr 1fr 5%;
+  }
+}
+@media screen and (max-width: 764px) {
+  .editEventGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-row-gap: 8px;
+    background-color: rgb(233, 236, 239);
+    grid-template-areas: 
+    "editEventPageTitle"
+    "inputEventTheme"
+    "chooseDateAndTime"
+    "selectEventMembers"
+    "choosedRoom";
+  }
+}
+
+.editEventGrid > div {
+  padding: 0px 20px;
+}
+@media screen and (max-width: 764px) {
+  .editEventGrid > div {
+    background-color: white;
+    padding: 16px 10px;
+  }
+}
+
+.editEventGrid input {
+  margin-top: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  font-size: 15px;
+  text-indent: 0.5em;
+  border-radius: 4px;
+  border: 2px solid #E9ECEF;
+  outline: none;
+}
+
+.editEventGrid .inputName {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.editEventGrid input:hover {
+  border: 2px solid rgba(0, 123, 255, 0.356);
+}
+.editEventGrid input:focus {
+  border: 2px solid rgb(0, 125, 255);
+}
+
+.editEventPageTitleBlock {
+  grid-area: editEventPageTitle
+}
+
+.editEventPageTitleBlock h1 {
+  margin-top: 31px;
+  font-weight: 600;
+  font-size: 20px;
+  color: black;
+}
+@media screen and (max-width: 764px) {
+  .editEventPageTitleBlock h1 {
+    margin-top: 10px;
+  }
+}
+
+
+/*.inputEventThemeBlock*/
+
+.inputEventThemeBlock {
+  grid-area: inputEventTheme;
+}
+
+.inputEventThemeBlock span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+.inputEventThemeBlock > div {
+  position: relative;
+}
+
+.inputEventThemeBlock .clearInputButton {
+  position: absolute;
+  margin-top:15px;
+  margin-left: -29px;
+  height: 16px;
+  width: 16px;
+  padding: 0px;
+  background-color: transparent;
+  border: none;
+  border-radius: 100px;
+  outline: none;
+  cursor: pointer;
+}
+.inputEventThemeBlock .clearInputButton:hover {
+  background-color: rgb(233, 236, 239);
+  transform: scale(1.1);
+}
+
+.inputEventThemeBlock .clearInputButton img{
+  margin-top: 4px;
+  margin-left: -0.015px;
+  width: 9px;
+  height: 9px;
+}
+
+
+/*.chooseDateAndTimeBlock*/
+
+.chooseDateAndTimeBlock {
+  grid-area: chooseDateAndTime;
+}
+
+.chooseDateAndTimeBlock > div {
+  display: grid;
+  grid-template-columns: 53% 4% 42%;
+  grid-template-areas: 
+    "chooseDate . chooseTime"
+}
+@media screen and (max-width: 764px) {
+  .chooseDateAndTimeBlock > div {
+    grid-template-columns: 1fr;
+    grid-row-gap: 10px;
+    grid-template-areas: 
+      "chooseDate"
+      "chooseTime"
+
+  }
+}
+
+.chooseDateAndTimeBlock .chooseDate {
+  grid-area: chooseDate;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.chooseDateAndTimeBlock .chooseDateCalendar {
+  z-index: 999;
+  top: 60px;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 16px rgba(0,0,0,0.2);
+}
+.chooseDateAndTimeBlock .chooseDateCalendar .DayPicker-wrapper {
+  outline: none;
+}
+
+.chooseDateAndTimeBlock .chooseTime {
+  grid-area: chooseTime;
+  display: flex;
+}
+
+.chooseDateAndTimeBlock .chooseTime .startTime, .chooseDateAndTimeBlock .chooseTime .endTime  {
+  height: 100%;
+  flex-grow: 1;
+}
+
+.chooseDateAndTimeBlock .chooseTime .separator  {
+  width: auto;
+  height: 25px;
+  padding: 3px;
+  align-self:flex-end;
+  font-weight: 600;
+}
+
+
+/*.selectEventMembersBlock*/
+
+.selectEventMembersBlock {
+  grid-area: selectEventMembers;
+  max-height: 200px;
+}
+
+.selectEventMembersBlock .selectMembers {
+  position: relative;
+}
+
+.selectEventMembersBlock .suggestions {
+  position: absolute;
+  width: 100%;
+  height: 136px;
+  margin-top: 1px;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: 0 1px 16px rgba(0,0,0,0.2);
+}
+.selectEventMembersBlock .suggestions > div {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 34px;
+  padding: 5px 0px 5px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.selectEventMembersBlock .suggestions > div span{
+  margin-left: 10px;
+}
+
+.selectEventMembersBlock .suggestions > div .homeFloor {
+  color: #858E98;
+}
+.selectEventMembersBlock .suggestions >div:hover{
+  background-color: rgb(246, 247, 249);
+}
+.selectEventMembersBlock .suggestions >div img{
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+}
+
+.selectEventMembersBlock .suggestions::-webkit-scrollbar{
+	width: 8px;
+	background-color: none;
+}
+
+.selectEventMembersBlock .suggestions::-webkit-scrollbar-thumb{
+	background-color: #D5DFE9;
+  border-radius: 100px;
+}
+
+.selectEventMembersBlock .choosedMembers {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  margin-top: 4px;
+}
+
+.selectEventMembersBlock .choosedMembers > div {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  margin-right: 2%;
+  box-sizing: border-box;
+  padding-right: 5px;
+  border-radius: 16px;
+  background-color: rgb(233, 236, 239);
+  font-size: 13px;
+  letter-spacing: 0;
+
+}
+
+.selectEventMembersBlock .choosedMembers .userAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+}
+
+.selectEventMembersBlock .choosedMembers .deleteAvatarButton {
+  width: 13px;
+  height: 13px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+.selectEventMembersBlock .choosedMembers .deleteAvatarButton:hover {
+  transform: scale(1.1)
+}
+
+.selectEventMembersBlock .choosedMembers span {
+  margin-left: 8px;
+}
+
+
+/*choosedRoomBlock */
+
+.choosedRoomBlock {
+  grid-area: choosedRoom;
+  height: 60px;
+}
+
+.choosedRoomBlock .eventInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  font-size: 15px;
+  text-indent: 0.5em;
+  border-radius: 4px;
+  background-color: rgb(0, 125, 255);
+  color: white;
+  font-size: 13px;
+}
+.choosedRoomBlock .eventInfo > div:first-child {
+  display: flex;
+  margin-left: 1%;
+  margin-right: 5%;
+}
+
+.choosedRoomBlock .eventInfo .clearInfoButton {
+  min-width: 30px;
+  cursor: pointer;
+}
+
+.choosedRoomBlock .eventInfo .clearInfoButton:hover {
+  transform: scale(1.1);
+}
+
+/*footer*/
+
+.footer {
+  height: 76px;
+  box-sizing: border-box;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding: 20px 0px;
+  border-top: 1px solid rgb(240,240,240);
+}
+.footer > div {
+  height: 36px;
+  display: grid;
+  grid-template-rows: 1fr auto auto auto 1fr;
+  grid-column-gap: 36px;
+  grid-template-areas: 
+    ". cancelButton deleteButton saveButton .";
+  justify-content: center;
+}
+@media screen and (max-width: 764px) {
+  .footer {
+    padding: 0px 0px;
+    padding-top: 8px;
+    height: 100px;
+    background-color: rgb(233, 236, 239);
+  }
+  .footer > div {
+    padding-top: 8px;
+    height: 82px;
+    display: grid;
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-column-gap: 36px;
+    grid-row-gap: 10px;
+    grid-template-areas: 
+      ". deleteButton deleteButton ."
+      ". cancelButton saveButton .";
+    justify-content: center;
+    background-color: white;
+  }
+}
+
+.footer button, .eventModal button {
+  height: 36px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  font-size: 13px;
+  background-color: rgb(233, 236, 239);
+}
+.footer button:hover {
+  background-color: rgba(0,16,33,0.1);
+}
+.footer button:active {
+  background-color: rgba(0,16,33,0.2);
+}
+
+.footer .cancelButton {
+  grid-area: cancelButton;
+}
+
+.footer .deleteButton {
+  grid-area: deleteButton;
+}
+@media screen and (max-width: 764px) {
+  .footer .deleteButton {
+    color: red;
+  }
+}
+
+.footer .saveButton {
+  grid-area: saveButton;
+  color: white;
+  background-color: rgb(0, 125, 255);
+}
+.footer .saveButton:hover {
+  background-color: rgb(0, 89, 255);
+}
+.footer .saveButton:active {
+  background-color: rgb(0, 62, 179);
+}
+
+.eventModalOverlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0,16,33,0.40);
+}
+
+.eventModal {
+  position: absolute;
+  box-sizing: border-box;
+  width: 444px;
+  height: 252px;
+  padding: 32px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 16px 0 rgba(0,44,92,0.28);
+  outline: none;
+  text-align: center;
+  font-family: HelveticaNeue, Open-sans, sans-serif;
+}
+
+@media screen and (max-width: 764px) {
+  .eventModal {
+    width: 100%;
+    height: 267px;
+  }
+}
+
+.eventModal img{
+  width: 40px;
+  height: 30px;
+}
+
+.eventModal h1{
+  margin: 8px;
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+.eventModal p{
+  margin: 6px;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+.eventModal .okButton {
+  margin-top: 34px;
+  color: white;
+  background-color: rgb(0, 125, 255);
+}
+.eventModal .okButton:hover {
+  background-color: rgb(0, 89, 255);
+}
+.eventModal .okButton:active {
+  background-color: rgb(0, 62, 179);;
+}
+
+.eventModal .cancelButton, 
+.eventModal .deleteButton {
+  margin-top: 34px;
+  margin-left: 8px;
+  margin-right: 8px;
+  background-color: rgb(233, 236, 239);
+}
+.eventModal .cancelButton:hover, 
+.eventModal .deleteButton:hover,
+.eventModal .sureDeleteButton:hover {
+  background-color: rgba(0,16,33,0.1);
+}
+.eventModal .cancelButton:active, 
+.eventModal .deleteButton:active,
+.eventModal .sureDeleteButton:active {
+  background-color: rgba(0,16,33,0.2);
+}
