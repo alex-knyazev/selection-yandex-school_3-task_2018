@@ -289,3 +289,9 @@
   height: 24px;
   border-radius: 100%;
 }
+
+/*loader-spinner*/
+.css-1wvv9v7 {
+  left: calc(50% - 10vh);
+  margin-top: 5%;
+}

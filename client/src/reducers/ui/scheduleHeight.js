@@ -1,5 +1,5 @@
 
-import { SET_SCHEDULE_HEIGHT } from '../actions/scheduleHeight';
+import { SET_SCHEDULE_HEIGHT } from '../../actions/ui/scheduleHeight';
 
 const initialState = 0;
 

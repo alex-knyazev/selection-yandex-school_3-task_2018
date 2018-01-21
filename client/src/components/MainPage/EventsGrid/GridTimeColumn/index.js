@@ -5,7 +5,7 @@ import HourColumn from './HourColumn'
 
 import './gridTimeColumn.css'
 
-import { setScheduleHeight } from '../../../../actions/scheduleHeight'
+import { setScheduleHeight } from '../../../../actions/ui/scheduleHeight'
 
 class GridTimeColumn extends Component {
 

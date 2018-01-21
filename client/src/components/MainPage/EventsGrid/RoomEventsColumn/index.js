@@ -4,18 +4,15 @@ import Floor from './Floor';
 
 import './roomEventsColumn.css'
 
-import testDataFloors from '../../../../testData/testDataFloors'
-
 class RoomEventsColumn extends Component {
-
   makeFloors = () => {
-    let floorsElements = []
-    for (let i = 0; i < testDataFloors.length; i++) {
-      const floor = testDataFloors[i];
+    let floorsElements = [];
+    for(let floor in this.props.eventsInRoomsOnFloors) {
       floorsElements.push(
         <Floor
-          key={floor.title + "_" + i}
-          data={floor}
+          key={floor + "_floor"}
+          title={floor + " этаж"}
+          rooms={this.props.eventsInRoomsOnFloors[floor]}
         />
       )
     }

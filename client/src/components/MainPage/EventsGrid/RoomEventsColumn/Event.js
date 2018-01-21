@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import edit from '../../../../assets/edit.svg'
-import mentorAvatar from '../../../../assets/emoji1.svg';
 
 class Event extends Component {
   constructor(props) {
@@ -14,10 +13,10 @@ class Event extends Component {
 
   calculateWidth = () => {
     const { startHour, endHour } = this.props.startAndEndHours;
-    const { dataEvent } = this.props;
+    const { eventData } = this.props;
     let widthPercents = 0;
-    const dateStart = new Date(dataEvent.dateStart);
-    const dateEnd = new Date(dataEvent.dateEnd);
+    const dateStart = new Date(eventData.dateStart);
+    const dateEnd = new Date(eventData.dateEnd);
     let durationInHours = (dateEnd - dateStart) / 1000 / 60 / 60;
     widthPercents = durationInHours / (endHour - startHour) * 100;
     return widthPercents;
@@ -27,8 +26,7 @@ class Event extends Component {
     let {
       dateStart,
       dateEnd
-    } = this.props.dataEvent;
-
+    } = this.props.eventData;
     const addZeroIfNeed = (time) => time < 10 ? "0" + time : time;
     dateStart = new Date(dateStart);
     dateEnd = new Date(dateEnd);
@@ -48,12 +46,17 @@ class Event extends Component {
   render() {
     const widthPercents = this.calculateWidth();
     let {
-      title: titleEvent,
+      title,
       room,
-      mentorName,
-      amountPeople
-    } = this.props.dataEvent;
+      users,
+    } = this.props.eventData;
+    const amountPeople = users.length
+    const mentor = users[0];
+    debugger;
     let time = this.makeTimeText();
+    
+    debugger;
+
     return (
       <div
         className="event"
@@ -71,11 +74,11 @@ class Event extends Component {
                   <img alt="edit event" src={edit} />
                 </div>
                 <div className="eventInfo">
-                  <h1>{titleEvent}</h1>
+                  <h1>{title}</h1>
                   <p>{time}  &#183; {room.title} </p>
                   <p>
-                    <img alt="mentor avatar" src={mentorAvatar} className="mentorAvatar" />
-                    <span className="mentorName">{mentorName} </span>
+                    <img alt="mentor avatar" src={mentor.avatarUrl} className="mentorAvatar" />
+                    <span className="mentorName">{mentor.login} </span>
                     <span className="amountPeople"> и {amountPeople} участников</span>
                   </p>
                 </div>

@@ -46,10 +46,10 @@ class Room extends Component {
   }
 
   makeEventsElements = () => {
-    const dataEvents = this.props.dataEvents;
+    const eventsData = this.props.roomData.events;
     let eventsElements = [];
     let isFullBusy = true;
-    if (!dataEvents.length) {
+    if (!eventsData.length) {
       eventsElements.push(
         <EmptyTime
           key={"full_empty_time"}
@@ -59,8 +59,8 @@ class Room extends Component {
       isFullBusy = false;
     }
     //we assume that events of room are sorted by date
-    for (let i = 0; i < dataEvents.length; i++) {
-      const event = dataEvents[i];
+    for (let i = 0; i < eventsData.length; i++) {
+      const event = eventsData[i];
       let {
         leftInsert,
         rightInsert,
@@ -81,7 +81,7 @@ class Room extends Component {
       eventsElements.push(
         <Event
           key={"event" + i + "_" + event.title}
-          dataEvent={event}
+          eventData={event}
           emptyTimeStart={emptyTimeStart}
           emptyTimeEnd={emptyTimeEnd}
         />
@@ -103,7 +103,7 @@ class Room extends Component {
 
   calculateEmptyTime = (event, index) => {
     const { startHour, endHour } = this.props.startAndEndHours;
-    const dataEvents = this.props.dataEvents;
+    const eventsData = this.props.roomData.events;
     const emptyTime = {
       leftInsert: null,
       rightInsert: null,
@@ -122,7 +122,7 @@ class Room extends Component {
       }
     }
     else {
-      const previousEvent = dataEvents[index - 1];
+      const previousEvent = eventsData[index - 1];
       const {
         dateEnd: dateEndPr,
       } = previousEvent;
@@ -135,7 +135,7 @@ class Room extends Component {
       }
     }
 
-    if (index === dataEvents.length - 1) {
+    if (index === eventsData.length - 1) {
       const dayDateEnd = new Date(new Date(event.dateEnd).setHours(endHour, 0, 0))
       if (eventDateEnd < dayDateEnd) {
         let durationInHours = (dayDateEnd - eventDateEnd) / 1000 / 60 / 60;
@@ -149,7 +149,7 @@ class Room extends Component {
   }
 
   render() {
-    const { title, capacity } = this.props.dataRoom;
+    const { title, capacity } = this.props.roomData;
     const { isRoomInfoHidden, scrollLeftPixels } = this.state;
     const { eventsElements, isFullBusy } = this.makeEventsElements();
     let roomClasses = classNames({
@@ -168,7 +168,7 @@ class Room extends Component {
       <div className={roomClasses}>
         <div
           className={roomInfoClasses}
-          style={isRoomInfoHidden ? { transform: 'translate('+(scrollLeftPixels + 'px)' )} : {}}
+          style={isRoomInfoHidden ? { transform: 'translate('+( scrollLeftPixels + 'px)' )} : {}}
         >
           <div className="roomInfoName">
             {!isRoomInfoHidden

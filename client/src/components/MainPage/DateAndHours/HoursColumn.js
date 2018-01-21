@@ -59,7 +59,6 @@ class CurrentTime extends Component {
 
   getTimeCircleMargin = (hour, minutes) => {
     const { startHour, endHour } = this.props.startAndEndHours;
-    debugger;
     let oneHourWidthPercent = 100/(endHour-startHour + 1);
     let hourMargin = (hour - startHour) * oneHourWidthPercent;
     let minutesMargin = (oneHourWidthPercent * (minutes/60));
