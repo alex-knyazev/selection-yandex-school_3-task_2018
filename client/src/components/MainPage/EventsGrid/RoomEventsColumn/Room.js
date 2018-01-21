@@ -64,16 +64,14 @@ class Room extends Component {
       let {
         leftInsert,
         rightInsert,
-        emptyTimeStart,
-        emptyTimeEnd
       } = this.calculateEmptyTime(event, i);
       if (leftInsert) {
         eventsElements.push(
           <EmptyTime
             key={"left_empty_time_" + i + "_" + event.title}
-            widthPercents={leftInsert}
-            emptyTimeStart={emptyTimeStart}
-            emptyTimeEnd={emptyTimeEnd}
+            widthPercents={leftInsert.widthPercents}
+            emptyTimeStart={leftInsert.emptyTimeStart}
+            emptyTimeEnd={leftInsert.emptyTimeEnd}
           />
         )
         isFullBusy = false;
@@ -82,17 +80,15 @@ class Room extends Component {
         <Event
           key={"event" + i + "_" + event.title}
           eventData={event}
-          emptyTimeStart={emptyTimeStart}
-          emptyTimeEnd={emptyTimeEnd}
         />
       )
       if (rightInsert) {
         eventsElements.push(
           <EmptyTime
             key={"right_empty_time_" + i + "_" + event.title}
-            widthPercents={rightInsert}
-            emptyTimeStart={emptyTimeStart}
-            emptyTimeEnd={emptyTimeEnd}
+            widthPercents={rightInsert.widthPercents}
+            emptyTimeStart={rightInsert.emptyTimeStart}
+            emptyTimeEnd={rightInsert.emptyTimeEnd}
           />
         )
         isFullBusy = false;
@@ -105,20 +101,19 @@ class Room extends Component {
     const { startHour, endHour } = this.props.startAndEndHours;
     const eventsData = this.props.roomData.events;
     const emptyTime = {
-      leftInsert: null,
-      rightInsert: null,
-      emptyTimeStart: null,
-      emptyTimeEnd: null
+      leftInsert: {},
+      rightInsert: {},
     }
     const eventDateStart = new Date(event.dateStart);
     const eventDateEnd = new Date(event.dateEnd);
     if (index === 0) {
+      debugger;
       const dayDateStart = new Date(new Date(event.dateStart).setHours(startHour, 0, 0))
       if (eventDateStart > dayDateStart) {
         let durationInHours = (eventDateStart - dayDateStart) / 1000 / 60 / 60;
-        emptyTime.leftInsert = durationInHours / (endHour - startHour) * 100;
-        emptyTime.emptyTimeStart = dayDateStart;
-        emptyTime.emptyTimeEnd = eventDateStart;
+        emptyTime.leftInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
+        emptyTime.leftInsert.emptyTimeStart = dayDateStart;
+        emptyTime.leftInsert.emptyTimeEnd = eventDateStart;
       }
     }
     else {
@@ -129,9 +124,9 @@ class Room extends Component {
       const previousEventDateEnd = new Date(dateEndPr);
       if (dateEndPr !== eventDateStart) {
         let durationInHours = (eventDateStart - previousEventDateEnd) / 1000 / 60 / 60;
-        emptyTime.leftInsert = durationInHours / (endHour - startHour) * 100;
-        emptyTime.emptyTimeStart = previousEventDateEnd;
-        emptyTime.emptyTimeEnd = eventDateStart;
+        emptyTime.leftInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
+        emptyTime.leftInsert.emptyTimeStart = previousEventDateEnd;
+        emptyTime.leftInsert.emptyTimeEnd = eventDateStart;
       }
     }
 
@@ -139,9 +134,9 @@ class Room extends Component {
       const dayDateEnd = new Date(new Date(event.dateEnd).setHours(endHour, 0, 0))
       if (eventDateEnd < dayDateEnd) {
         let durationInHours = (dayDateEnd - eventDateEnd) / 1000 / 60 / 60;
-        emptyTime.rightInsert = durationInHours / (endHour - startHour) * 100;
-        emptyTime.emptyTimeStart = eventDateEnd;
-        emptyTime.emptyTimeEnd = dayDateEnd;
+        emptyTime.rightInsert.widthPercents  = durationInHours / (endHour - startHour) * 100;
+        emptyTime.rightInsert.emptyTimeStart = eventDateEnd;
+        emptyTime.rightInsert.emptyTimeEnd = dayDateEnd;
       }
     }
 
@@ -184,7 +179,7 @@ class Room extends Component {
           </div>
           {!isRoomInfoHidden
             ?
-            <div className="roomInfoCapacity">{capacity}</div>
+            <div className="roomInfoCapacity">до {capacity} человек</div>
             : null
           }
 
