@@ -10,7 +10,6 @@ export default class Footer extends Component {
     super(props)
 
     this.state = {
-      isEventSaved: false,
       isModalOkClicked: false
     }
     this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
@@ -18,9 +17,6 @@ export default class Footer extends Component {
 
   handleSaveButtonClick = () => {
     this.props.handleCreateEvent();
-    /*this.setState({
-      isEventSaved: true
-    })*/
   }
 
   handleOkButtonClick = () => {
@@ -41,7 +37,7 @@ export default class Footer extends Component {
           </button>
         </Link>
         <button className="saveButton" onClick={this.handleSaveButtonClick}><b>Создать встречу</b></button>
-        <EventCreatedModal isOpen={this.state.isEventSaved} handleOkButtonClick={this.handleOkButtonClick} />
+        <EventCreatedModal isOpen={this.props.isEventCreated} handleOkButtonClick={this.handleOkButtonClick} />
       </div>
     )
   }

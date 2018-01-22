@@ -94,6 +94,7 @@ class Room extends Component {
         <Event
           key={"event" + i + "_" + event.title}
           eventData={event}
+          floorTitle={floorTitle}
         />
       )
       if (rightInsert) {

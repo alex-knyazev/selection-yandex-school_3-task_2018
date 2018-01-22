@@ -11,8 +11,9 @@ export default class SelectMembers extends Component {
     this.state = {
       searchTerm: '',
       isShowSuggestions: false,
-      choosedMembers: []
+      choosedMembers: this.props.choosedUsers || []
     }
+    debugger;
     this.searchUpdated = this.searchUpdated.bind(this);
     this.addUser = this.addUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);

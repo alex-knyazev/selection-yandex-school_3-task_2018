@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
 import edit from '../../../../assets/edit.svg'
 
@@ -7,7 +8,8 @@ class Event extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isShowEventToolTip: false
+      isShowEventToolTip: false,
+      isRedirectToEditEvent: false
     }
   }
 
@@ -43,7 +45,23 @@ class Event extends Component {
     })
   }
 
+  handleEditEventClick = () => {
+    this.setState({
+      isRedirectToEditEvent: true
+    })
+  }
+
   render() {
+    if (this.state.isRedirectToEditEvent) {
+      
+      return (
+        <Redirect to={{
+          pathname: "/editEvent",
+          state: Object.assign(this.props.eventData, {floorTitle: this.props.floorTitle})
+        }}
+        />
+      )
+    }
     const widthPercents = this.calculateWidth();
     let {
       title,
@@ -66,7 +84,7 @@ class Event extends Component {
             <div className="eventToolTipParent">
               <div className="eventTooltip">
                 <div className="triangleBorder"></div>
-                <div className="editEventButton">
+                <div className="editEventButton" onClick={this.handleEditEventClick}>
                   <img alt="edit event" src={edit} />
                 </div>
                 <div className="eventInfo">
@@ -80,7 +98,7 @@ class Event extends Component {
                         <span className="mentorName">{mentor.login} </span>
                         <span className="amountPeople"> и {amountPeople} участников</span>
                       </p>
-                      : 
+                      :
                       null
                   }
 

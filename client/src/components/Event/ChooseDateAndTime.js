@@ -35,11 +35,10 @@ export default class ChooseDateAndTime extends Component {
       })
     }
     else if (this.props.selectedDate) {
-      debugger;
       this.setState({
         dayText: this.makeDayText(this.props.selectedDate),
       })
-    }debugger
+    }
 
   }
 

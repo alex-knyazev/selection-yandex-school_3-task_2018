@@ -17,7 +17,8 @@ class CreateEvent extends Component {
       eventDefaultInfo: null,
       newEventInfo: null,
       roomTitle: '',
-      floorTitle: ''
+      floorTitle: '',
+      isEventCreated: false
     }
     this.changeDates = this.changeDates.bind(this);
   }
@@ -49,6 +50,15 @@ class CreateEvent extends Component {
       })
     }
   }
+
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.createdEvent !== this.props.createdEvent) {
+      this.setState({
+        isEventCreated: true
+      })
+    }
+  }
+  
 
   changeTitle = (title) => {
     const currentInfo = this.state.newEventInfo;
@@ -131,7 +141,7 @@ class CreateEvent extends Component {
         </div>
 
         <div className="footer">
-          <Footer handleCreateEvent={this.handleCreateEvent}/>
+          <Footer isEventCreated={this.state.isEventCreated} handleCreateEvent={this.handleCreateEvent}/>
         </div>
       </div>
     )
@@ -140,7 +150,8 @@ class CreateEvent extends Component {
 
 const mapStateToProps = (state) => ({
   allUsers: state.users,
-  selectedDate: state.selectedDate
+  selectedDate: state.selectedDate,
+  createdEvent: state.createdEvent
 })
 
 const mapDispatchToProps = {

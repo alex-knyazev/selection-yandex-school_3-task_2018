@@ -6,11 +6,14 @@ import selectedDate from './ui/selectedDate';
 
 import eventsInRoomsOnFloors from './server-data/eventsInRoomsOnFloors';
 import users from './server-data/users';
+import createdEvent from './server-data/createdEvent';
+import editedEvent from './server-data/editedEvent';
 
 export default combineReducers({
   scheduleHeight,
   startAndEndHours,
   selectedDate,
   eventsInRoomsOnFloors,
-  users
+  users,
+  createdEvent
 });

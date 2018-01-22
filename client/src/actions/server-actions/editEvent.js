@@ -1,7 +1,7 @@
-export const CREATE_EVENT = "CREATE_EVENT";
+export const EDIT_EVENT = "EDIT_EVENT";
 
-const query = `mutation createEvent($input: EventCreateInput!, $roomId: ID!, $usersIds: [ID]) {
-  createEvent (
+const query = `mutation editEvent($input: EventCreateInput!, $roomId: ID!, $usersIds: [ID]) {
+  editEvent (
     input: $input
     roomId: $roomId,
     usersIds: $usersIds
@@ -11,7 +11,7 @@ const query = `mutation createEvent($input: EventCreateInput!, $roomId: ID!, $us
 }`
 
 
-export default function createEvent(eventData) {
+export default function editEvent(eventData) {
   const input = {
     title: eventData.title.toString(),
     dateStart: eventData.dateStart.toISOString(),
@@ -38,9 +38,9 @@ export default function createEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.createEvent;
+        const event = response.data.editEvent;
         dispatch({
-          type: CREATE_EVENT,
+          type: EDIT_EVENT,
           event: event
         })
       });
