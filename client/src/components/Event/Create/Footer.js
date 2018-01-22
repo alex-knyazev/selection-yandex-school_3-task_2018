@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { Link, Redirect } from 'react-router-dom';
 import Modal from 'react-modal';
+
 
 import congratulationsImg from '../../../assets/congrtulations.png';
 
@@ -8,34 +10,44 @@ export default class Footer extends Component {
     super(props)
 
     this.state = {
-      isEventSaved: false
+      isEventSaved: false,
+      isModalOkClicked: false
     }
+    this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
   }
 
   handleSaveButtonClick = () => {
-    this.setState({
+    this.props.handleCreateEvent();
+    /*this.setState({
       isEventSaved: true
-    })
+    })*/
   }
 
   handleOkButtonClick = () => {
     this.setState({
-      isEventSaved: false
+      isModalOkClicked: true
     })
   }
 
   render() {
+    if (this.state.isModalOkClicked) {
+      return <Redirect to="/" />
+    }
     return (
       <div>
-        <button className="cancelButton"><b>Отмена</b></button>
+        <Link to="/">
+          <button className="cancelButton" onClick={this.handleCancelButtonClick}>
+            <b>Отмена</b>
+          </button>
+        </Link>
         <button className="saveButton" onClick={this.handleSaveButtonClick}><b>Создать встречу</b></button>
-        <EventCreatedModal isOpen={this.state.isEventSaved} />
+        <EventCreatedModal isOpen={this.state.isEventSaved} handleOkButtonClick={this.handleOkButtonClick} />
       </div>
     )
   }
 }
 
-const EventCreatedModal = ({isOpen}) => {
+const EventCreatedModal = ({ isOpen, handleOkButtonClick }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -55,7 +67,7 @@ const EventCreatedModal = ({isOpen}) => {
       <h1>Всреча создана!</h1>
       <p>14 декабря, 15:00 - 17:00</p>
       <p>Готем &#183; 4 этаж</p>
-      <button className="okButton" onClick={this.handleOkButtonClick}><b>Хорошо</b></button>
+      <button className="okButton" onClick={handleOkButtonClick}><b>Хорошо</b></button>
     </Modal>
   )
 }

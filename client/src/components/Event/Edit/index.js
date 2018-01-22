@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import InputTheme from '../InputTheme';
+import InputTitle from '../InputTitle';
 import SelectMembers from '../SelectMembers';
 import ChooseDateAndTime from '../ChooseDateAndTime';
 import ChoosedRoom from '../ChoosedRoom';
@@ -16,7 +16,7 @@ export default class EditEvent extends Component {
           </div>
 
           <div className="inputEventThemeBlock">
-            <InputTheme />
+            <InputTitle />
           </div>
 
           <div className="chooseDateAndTimeBlock">

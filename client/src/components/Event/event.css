@@ -208,7 +208,7 @@
 .selectEventMembersBlock .suggestions {
   position: absolute;
   width: 100%;
-  height: 136px;
+  max-height: 136px;
   margin-top: 1px;
   overflow-y: auto;
   background-color: white;
@@ -340,6 +340,7 @@
   grid-row-end: 3;
   padding: 20px 0px;
   border-top: 1px solid rgb(240,240,240);
+  z-index: 2;
 }
 .footer > div {
   height: 36px;
@@ -424,6 +425,7 @@
   right: 0px;
   bottom: 0px;
   background-color: rgba(0,16,33,0.40);
+  z-index: 999;
 }
 
 .eventModal {
@@ -438,6 +440,7 @@
   outline: none;
   text-align: center;
   font-family: HelveticaNeue, Open-sans, sans-serif;
+  z-index: 999;
 }
 
 @media screen and (max-width: 764px) {
@@ -476,6 +479,10 @@
   background-color: rgb(0, 62, 179);;
 }
 
+.eventModal .okButton a{
+  text-decoration: none;
+}
+
 .eventModal .cancelButton, 
 .eventModal .deleteButton {
   margin-top: 34px;
@@ -493,3 +500,4 @@
 .eventModal .sureDeleteButton:active {
   background-color: rgba(0,16,33,0.2);
 }
+

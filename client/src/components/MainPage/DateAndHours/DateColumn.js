@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import arrowRight from '../../../assets/arrow.svg';
 import arrowLeft from '../../../assets/arrow2.svg';
+
+import { setSelectedDate } from './../../../actions/ui/selectedDate'
 
 import {
   MONTHS_SHORT,
@@ -24,8 +28,23 @@ class DateColumn extends Component {
     }
   }
 
+  componentWillMount = () => {
+    console.log(this.props);
+    if(this.props.selectedDate) {
+      this.setState({
+        selectedDate: this.props.selectedDate
+      })
+    }
+  }
+  
   componentDidMount = () => {
     window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUpdate = (nextProps, nextState) => {
+    if(this.state.selectedDate != nextState.selectedDate) {
+      this.props.setSelectedDate(nextState.selectedDate);
+    }
   }
 
   handleScroll = (e) => {
@@ -180,5 +199,12 @@ class Calendar extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  selectedDate: state.selectedDate
+})
 
-export default DateColumn;
+const mapDispatchToProps = {
+  setSelectedDate
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DateColumn);

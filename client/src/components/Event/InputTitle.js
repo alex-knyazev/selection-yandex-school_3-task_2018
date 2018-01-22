@@ -2,25 +2,29 @@ import React, { Component } from 'react'
 
 import closeButton from './../../assets/close.svg'
 
-export default class InputTheme extends Component {
+export default class InputTitle extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      theme: ''
+      title: ''
     }
   }
 
+  componentWillUpdate = (nextProps, nextState) => {
+    if(nextState.title !== this.state.title) {
+      this.props.changeTitle(nextState.title)
+    }
+  }
 
   onChangeInputHandler = (e) => {
     this.setState({
-      theme: e.target.value
+      title: e.target.value
     })
   }
 
   clickClearInputHandle = () => {
     this.setState({
-      theme: ''
+      title: ''
     })
   }
 
@@ -29,9 +33,9 @@ export default class InputTheme extends Component {
       <div>
         <span className="inputName">Тема</span>
         <input
-          id="inputTheme"
+          id="InputTitle"
           type="text"
-          value={this.state.theme}
+          value={this.state.title}
           onChange={this.onChangeInputHandler}
           placeholder="О чем будете говорить?"
         />

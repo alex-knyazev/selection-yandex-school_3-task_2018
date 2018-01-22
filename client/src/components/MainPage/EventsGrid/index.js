@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { BounceLoader} from 'react-spinners';
+import { PacmanLoader} from 'react-spinners';
 
 import RoomEventsColumn from './RoomEventsColumn';
 import GridTimeColumn from './GridTimeColumn';
@@ -19,10 +19,14 @@ class EventsGrid extends Component {
   }
 
   componentWillMount = () => {
-    this.props.getEventsInRoomsOnFloors();
+    this.props.getEventsInRoomsOnFloors(this.props.selectedDate);
   }
 
   componentWillReceiveProps = (nextProps) => {
+    if(nextProps.selectedDate !== this.props.selectedDate) {
+      this.props.getEventsInRoomsOnFloors(nextProps.selectedDate);
+      return;
+    }
     if (Object.keys(nextProps.eventsInRoomsOnFloors).length) {
       this.setState({
         eventsInRoomsOnFloors: nextProps.eventsInRoomsOnFloors,
@@ -34,8 +38,8 @@ class EventsGrid extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <BounceLoader
-          color={'#ff0000'}
+        <PacmanLoader
+          color={'#f6f5f9'}
           loading={true}
         />
       )
@@ -52,7 +56,8 @@ class EventsGrid extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  eventsInRoomsOnFloors: state.eventsInRoomsOnFloors
+  eventsInRoomsOnFloors: state.eventsInRoomsOnFloors,
+  selectedDate: state.selectedDate
 })
 
 const mapDispatchToProps = {

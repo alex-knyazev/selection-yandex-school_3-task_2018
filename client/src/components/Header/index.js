@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 
@@ -12,28 +12,32 @@ class Header extends Component {
 
     this.state = {
       isShowCreateButton: true,
-      scrollTopPixels: 0
     }
   }
 
   componentWillMount() {
     const pathname = this.props.location.pathname;
-    if (pathname === "/editEvent") {
-      this.setState({
-        isShowCreateButton: false
-      })
-    }
-  }
-
-  componentDidMount = () => {
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll = (e) => {
-    var scrollTop = window.pageYOffset;
+    const isShowCreateButton = this.checkIfShowCreateButton(pathname);
     this.setState({
-      scrollTopPixels: scrollTop
+      isShowCreateButton: isShowCreateButton
     })
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    const pathname = nextProps.location.pathname;
+    const isShowCreateButton =  this.checkIfShowCreateButton(pathname);
+    this.setState({
+      isShowCreateButton: isShowCreateButton
+    })
+  }
+
+  checkIfShowCreateButton = (pathname) => {
+    if (pathname === "/editEvent" || pathname === "/createEvent") {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   render() {
@@ -41,14 +45,20 @@ class Header extends Component {
       <div className="header" >
         <div className="fixedHeader">
           <div className="contentHeader">
-            <img alt="logo of application" src={logo} />
+            <Link to="/">
+              <img alt="logo of application" src={logo} />
+            </Link>
+
             {this.state.isShowCreateButton
               ?
-              <button className="buttonCreateEvent">
-                <span>
-                  Создать встречу
-              </span>
-              </button>
+              <Link to="/createEvent">
+                <button className="buttonCreateEvent">
+                  <span>
+                    Создать встречу
+                  </span>
+                </button>
+              </Link>
+
               :
               null
             }

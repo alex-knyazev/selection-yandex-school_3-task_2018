@@ -1,33 +1,51 @@
 import React, { Component } from 'react'
 import SearchInput, { createFilter } from 'react-search-input'
 
-import testUsersData from './../../testData/testUsersData'
-
 import deleteButtonImg from './../../assets/close.svg';
 
-const KEYS_TO_FILTER_USERS = ['name', 'homeFloor'];
+const KEYS_TO_FILTER_USERS = ['login', 'homeFloor'];
 
 export default class SelectMembers extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       searchTerm: '',
-      isFocused: false,
-      choosedMembers: [testUsersData[0], testUsersData[1]]
+      isShowSuggestions: false,
+      choosedMembers: []
     }
-    this.searchUpdated = this.searchUpdated.bind(this)
+    this.searchUpdated = this.searchUpdated.bind(this);
+    this.addUser = this.addUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+  }
+
+  componentWillUpdate = (nextProps, nextState) => {
+    if(nextState.choosedMembers != this.state.choosedMembers) {
+      const userIds = nextState.choosedMembers.map(member => member.id);
+      this.props.changeUsersIds(userIds)
+    }
   }
   
-  handleInputFocus = () => {
+  
+  addUser = (user) => {
+    const currentMembers = this.state.choosedMembers;
+    let newMembers = currentMembers.map((el,inde ) => el);
+    newMembers.push(user);
     this.setState({
-      isFocused: true
+      choosedMembers: newMembers,
+      isShowSuggestions: false
     })
   }
 
-  handleInputBlur = () => {
+  deleteUser = (user) => {
+    const newMembers = this.state.choosedMembers.filter( el => el.id !== user.id);
     this.setState({
-      isFocused: false
+      choosedMembers: newMembers,
+    })
+  }
+
+  handleInputFocus = () => {
+    this.setState({
+      isShowSuggestions: true
     })
   }
 
@@ -37,7 +55,7 @@ export default class SelectMembers extends Component {
 
   render() {
     const {
-      isFocused,
+      isShowSuggestions,
       searchTerm,
       choosedMembers
     } = this.state;
@@ -52,9 +70,18 @@ export default class SelectMembers extends Component {
             onFocus={this.handleInputFocus}
             onBlur={this.handleInputBlur}
           />
-          <Suggestions isShow={isFocused} searchTerm={searchTerm} />
+          <Suggestions 
+            isShow={isShowSuggestions} 
+            searchTerm={searchTerm} 
+            allUsers={this.props.allUsers}
+            choosedMembers={choosedMembers}
+            addUser={this.addUser}
+          />
         </div>
-        <ChoosedMembers choosedMembers={choosedMembers} />
+        <ChoosedMembers 
+          choosedMembers={choosedMembers} 
+          deleteUser={this.deleteUser}
+        />
       </div>
     )
   }
@@ -63,12 +90,17 @@ export default class SelectMembers extends Component {
 
 class Suggestions extends Component {
   render() {
-    const { searchTerm, isShow } = this.props;
+    const { searchTerm, isShow, allUsers, choosedMembers } = this.props;
     if (!isShow) {
       return null;
     }
-    const filteredUsers = testUsersData.filter(createFilter(searchTerm, KEYS_TO_FILTER_USERS))
-    const suggestionElements = filteredUsers.map(user => <Suggestion user={user} />)
+    let notChoosedUsers = allUsers.filter( (user) => {
+      return !choosedMembers.find((member) => user.id == member.id)
+    })
+    const filteredUsers = notChoosedUsers.filter(createFilter(searchTerm, KEYS_TO_FILTER_USERS))
+    const suggestionElements = filteredUsers.map(user => 
+      <Suggestion addUser={this.props.addUser} key={user.id} user={user} />
+    )
     if (!suggestionElements.length) {
       return null;
     }
@@ -84,15 +116,15 @@ class Suggestions extends Component {
 class Suggestion extends Component {
 
   handleUserClick = () => {
-    //add user to event function
+    this.props.addUser(this.props.user)
   }
 
   render() {
     const { user } = this.props;
     return (
       <div key={user.id} onClick={this.handleUserClick}>
-        <img alt="av" src={"https://api.adorable.io/avatars/25/"+ user.id +"abott@adorable.png"} />
-        <span>{user.name}</span>
+        <img alt="av" src={user.avatarUrl} />
+        <span>{user.login}</span>
         <span className="homeFloor">{user.homeFloor} этаж</span>
       </div>
     )
@@ -102,8 +134,10 @@ class Suggestion extends Component {
 
 class ChoosedMembers extends Component {
   render() {
-    const { choosedMembers} = this.props;
-    const choosedMembersElements = choosedMembers.map(user => <ChoosedMember user={user} />)
+    const { choosedMembers, deleteUser} = this.props;
+    const choosedMembersElements = choosedMembers.map( user => 
+      <ChoosedMember key={user.id} user={user} deleteUser={deleteUser}/>
+    )
     return (
       <div className="choosedMembers">
         {choosedMembersElements}
@@ -115,15 +149,15 @@ class ChoosedMembers extends Component {
 class ChoosedMember extends Component {
 
   handleDeleteUserClick = () => {
-    //add user to event function
+    this.props.deleteUser(this.props.user)
   }
 
   render() {
     const { user } = this.props;
     return (
       <div key={user.id} >
-        <img className="userAvatar" alt="av" src={"https://api.adorable.io/avatars/25/"+ user.id +"abott@adorable.png"} />
-        <span>{user.name}</span>
+        <img className="userAvatar" alt="av" src={user.avatarUrl} />
+        <span>{user.login}</span>
         <span className="deleteAvatarButton" onClick={this.handleDeleteUserClick}>
           <img alt="delete member" src={deleteButtonImg} />
         </span>

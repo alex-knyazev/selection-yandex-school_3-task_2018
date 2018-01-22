@@ -10,8 +10,11 @@ import { setScheduleHeight } from '../../../../actions/ui/scheduleHeight'
 class GridTimeColumn extends Component {
 
   findScheduleHeight = (e) => {
-    const scheduleHeight = e.clientHeight;
-    this.props.setScheduleHeight(scheduleHeight);
+    if(e) {
+      const scheduleHeight = e.clientHeight;
+      this.props.setScheduleHeight(scheduleHeight);
+    }
+
   }
 
   makeHoursGrid = () => {

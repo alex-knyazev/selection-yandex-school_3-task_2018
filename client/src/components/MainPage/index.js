@@ -17,7 +17,6 @@ export default class MainPage extends Component {
 }
 
 class Schedule extends Component {
-
   render() {
     return (
       <div className="schedule">

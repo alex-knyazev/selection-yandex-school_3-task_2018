@@ -47,13 +47,24 @@ class Room extends Component {
 
   makeEventsElements = () => {
     const eventsData = this.props.roomData.events;
+    const roomId = this.props.roomData.id;
+    const roomTitle = this.props.roomData.title;
+    const floorTitle = this.props.roomData.floor + ' этаж';
+    const { startHour, endHour } = this.props.startAndEndHours;
     let eventsElements = [];
     let isFullBusy = true;
     if (!eventsData.length) {
+      const dayDateStart = new Date(this.props.selectedDate.setHours(startHour, 0, 0));
+      const dayDateEnd = new Date(this.props.selectedDate.setHours(endHour, 0, 0));
       eventsElements.push(
         <EmptyTime
           key={"full_empty_time"}
           widthPercents={100}
+          emptyTimeStart={dayDateStart}
+          emptyTimeEnd={dayDateEnd}
+          roomId={roomId}
+          roomTitle={roomTitle}
+          floorTitle={floorTitle}
         />
       )
       isFullBusy = false;
@@ -72,6 +83,9 @@ class Room extends Component {
             widthPercents={leftInsert.widthPercents}
             emptyTimeStart={leftInsert.emptyTimeStart}
             emptyTimeEnd={leftInsert.emptyTimeEnd}
+            roomId={roomId}
+            roomTitle={roomTitle}
+            floorTitle={floorTitle}
           />
         )
         isFullBusy = false;
@@ -89,6 +103,9 @@ class Room extends Component {
             widthPercents={rightInsert.widthPercents}
             emptyTimeStart={rightInsert.emptyTimeStart}
             emptyTimeEnd={rightInsert.emptyTimeEnd}
+            roomId={roomId}
+            roomTitle={roomTitle}
+            floorTitle={floorTitle}
           />
         )
         isFullBusy = false;
@@ -107,7 +124,6 @@ class Room extends Component {
     const eventDateStart = new Date(event.dateStart);
     const eventDateEnd = new Date(event.dateEnd);
     if (index === 0) {
-      debugger;
       const dayDateStart = new Date(new Date(event.dateStart).setHours(startHour, 0, 0))
       if (eventDateStart > dayDateStart) {
         let durationInHours = (eventDateStart - dayDateStart) / 1000 / 60 / 60;
@@ -196,7 +212,8 @@ class Room extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  startAndEndHours: state.startAndEndHours
+  startAndEndHours: state.startAndEndHours,
+  selectedDate: state.selectedDate
 })
 
 export default connect(

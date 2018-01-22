@@ -1,40 +1,151 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import InputTheme from '../InputTheme';
+import InputTitle from '../InputTitle';
 import SelectMembers from '../SelectMembers';
 import ChooseDateAndTime from '../ChooseDateAndTime';
 import ChoosedRoom from '../ChoosedRoom';
 import Footer from './Footer'
 
-export default class EditEvent extends Component {
+import getUsers from '../../../actions/server-actions/getUsers'
+import createEvent from '../../../actions/server-actions/createEvent'
+
+class CreateEvent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      eventDefaultInfo: null,
+      newEventInfo: null,
+      roomTitle: '',
+      floorTitle: ''
+    }
+    this.changeDates = this.changeDates.bind(this);
+  }
+
+  componentWillMount = () => {
+    this.props.getUsers();
+    if(this.props.location.state) {
+      const defaultInfo = {
+        dateStart: this.props.location.state.emptyTimeStart,
+        dateEnd: this.props.location.state.emptyTimeEnd,
+        roomId: this.props.location.state.roomId,
+        title: '',
+        usersIds: [],
+      }
+      this.setState({
+        eventDefaultInfo: defaultInfo,
+        newEventInfo: defaultInfo,
+        roomTitle: this.props.location.state.roomTitle,
+        floorTitle: this.props.location.state.floorTitle
+      })
+    }
+    else {
+      const defaultInfo = {
+        dateStart: this.props.selectedDate
+      }
+      this.setState({
+        eventDefaultInfo: defaultInfo,
+        newEventInfo: defaultInfo
+      })
+    }
+  }
+
+  changeTitle = (title) => {
+    const currentInfo = this.state.newEventInfo;
+    this.setState({
+      newEventInfo : Object.assign(this.state.newEventInfo, { title } ) 
+    })
+  }
+
+  changeUsersIds = (usersIds) => {
+    const currentInfo = this.state.newEventInfo;
+    if(usersIds.length) { 
+      this.setState({
+        newEventInfo : Object.assign(this.state.newEventInfo, { usersIds } ) 
+      })
+    }
+  }
+  
+  changeDates = (dateStart, dateEnd) => {
+    const currentInfo = this.state.newEventInfo;
+    this.setState({
+      newEventInfo : Object.assign(this.state.newEventInfo, { dateStart, dateEnd } ) 
+    })
+  }
+
+  handleCreateEvent = () =>{
+    this.props.createEvent(this.state.newEventInfo);
+  }
+  
   render() {
+    const {
+      roomTitle,
+      floorTitle,
+      newEventInfo
+    } = this.state;
+    const {
+      dateStart, 
+      dateEnd,
+      title
+    } = newEventInfo;
+    const { allUsers, selectedDate } = this.props;
     return (
       <div className="editEvent">
+
         <div className="editEventGrid">
           <div className="editEventPageTitleBlock">
             <h1>Новая встреча</h1>
           </div>
 
           <div className="inputEventThemeBlock">
-            <InputTheme />
+            <InputTitle 
+              title={title} 
+              changeTitle={this.changeTitle}
+            />
           </div>
 
           <div className="chooseDateAndTimeBlock">
-            <ChooseDateAndTime />
+            <ChooseDateAndTime 
+              dateStart={dateStart} 
+              dateEnd={dateEnd}
+              selectedDate={selectedDate}
+              changeDates={this.changeDates}
+            />
           </div>
 
           <div className="selectEventMembersBlock">
-            <SelectMembers />
+            <SelectMembers 
+              changeUsersIds={this.changeUsersIds}
+              allUsers={allUsers}
+            />
           </div>
 
           <div className="choosedRoomBlock">
-            <ChoosedRoom />
+            <ChoosedRoom 
+              roomTitle={roomTitle} 
+              floorTitle={floorTitle}
+              dateStart={dateStart}
+              dateEnd={dateEnd}
+            />
           </div>
         </div>
+
         <div className="footer">
-          <Footer />
+          <Footer handleCreateEvent={this.handleCreateEvent}/>
         </div>
       </div>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  allUsers: state.users,
+  selectedDate: state.selectedDate
+})
+
+const mapDispatchToProps = {
+  getUsers,
+  createEvent
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (CreateEvent);

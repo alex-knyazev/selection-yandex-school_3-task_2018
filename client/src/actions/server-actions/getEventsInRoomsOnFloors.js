@@ -24,7 +24,7 @@ const query = `{
   }
 }`;
 
-export default function getEventsInRooms() {
+export default function getEventsInRooms(date) {
   return dispatch => {
     return fetch('/graphql', {
       method: 'post',
@@ -39,7 +39,7 @@ export default function getEventsInRooms() {
         return response.json();
       })
       .then((response) => {
-        const eventsInRoomsOnFloors = findEventsInRoomsOnFloors(response);
+        const eventsInRoomsOnFloors = findEventsInRoomsOnFloors(response, date);
         dispatch({
           type: EVENTS_IN_ROOMS_ON_FLOORS,
           eventsInRoomsOnFloors
@@ -48,13 +48,13 @@ export default function getEventsInRooms() {
   }
 }
 
-const findEventsInRoomsOnFloors = ({data}) => {
+const findEventsInRoomsOnFloors = ({data}, date) => {
   const rooms = data.rooms;
   const events = data.events;
   let floorsWithRooms = {};
   for (let i = 0; i < rooms.length; i++) {
     let room = rooms[i];
-    const eventsInRoom = findEventsInRoom(room, events);
+    const eventsInRoom = findEventsInRoom(room, events, date);
     room.events = eventsInRoom;
     const floor = room.floor;
     if(floorsWithRooms[floor]) {
@@ -67,14 +67,17 @@ const findEventsInRoomsOnFloors = ({data}) => {
   return floorsWithRooms;
 }
 
-const findEventsInRoom = (room, events) => {
+const findEventsInRoom = (room, events, date) => {
   let eventsInRoom = [];
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    const roomId = event.room.id;
-    if(roomId === room.id) {
-      eventsInRoom.push(event);
-    }
+    if(new Date(event.dateStart).setHours(0,0,0,0) === new Date(date).setHours(0,0,0,0)) {
+      const roomId = event.room.id;
+      if(roomId === room.id) {
+        eventsInRoom.push(event);
+      }
+    } 
+
   }
   return eventsInRoom
 }

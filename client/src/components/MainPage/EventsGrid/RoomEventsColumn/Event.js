@@ -52,11 +52,7 @@ class Event extends Component {
     } = this.props.eventData;
     const amountPeople = users.length
     const mentor = users[0];
-    debugger;
     let time = this.makeTimeText();
-    
-    debugger;
-
     return (
       <div
         className="event"
@@ -76,16 +72,23 @@ class Event extends Component {
                 <div className="eventInfo">
                   <h1>{title}</h1>
                   <p>{time}  &#183; {room.title} </p>
-                  <p>
-                    <img alt="mentor avatar" src={mentor.avatarUrl} className="mentorAvatar" />
-                    <span className="mentorName">{mentor.login} </span>
-                    <span className="amountPeople"> и {amountPeople} участников</span>
-                  </p>
+                  {
+                    amountPeople
+                      ?
+                      <p>
+                        <img alt="mentor avatar" src={mentor.avatarUrl} className="mentorAvatar" />
+                        <span className="mentorName">{mentor.login} </span>
+                        <span className="amountPeople"> и {amountPeople} участников</span>
+                      </p>
+                      : 
+                      null
+                  }
+
                 </div>
               </div>
             </div>
             :
-            null 
+            null
         }
       </div>
     )

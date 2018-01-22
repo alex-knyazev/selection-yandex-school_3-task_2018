@@ -15,8 +15,8 @@ class App extends Component {
         <div className="App">
           <Header />
           <Route exact path="/" component={MainPage} />
-          <Route exact path="/editEvent" component={EditEvent} />
-          <Route exact path="/createEvent" component={CreateEvent} />
+          <Route path="/editEvent" component={EditEvent} />
+          <Route path="/createEvent" component={CreateEvent} />
         </div>
       </Router>
     );
