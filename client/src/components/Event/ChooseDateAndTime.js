@@ -27,6 +27,7 @@ export default class ChooseDateAndTime extends Component {
   componentWillMount = () => {
     if (this.props.dateStart && this.props.dateEnd) {
       this.setState({
+        dayDate: this.props.dateStart,
         dateStart: this.props.dateStart,
         dateEnd: this.props.dateEnd,
         startTimeText: this.makeTimeText(this.props.dateStart),
@@ -36,6 +37,7 @@ export default class ChooseDateAndTime extends Component {
     }
     else if (this.props.selectedDate) {
       this.setState({
+        dayDate: this.props.selectedDate,
         dayText: this.makeDayText(this.props.selectedDate),
       })
     }
@@ -43,7 +45,7 @@ export default class ChooseDateAndTime extends Component {
   }
 
   componentWillUpdate = (nextProps, nextState) => {
-    if (nextState.dateStart !== this.state.dateStart || nextState.dateEnd !== this.state.dateEnd) {
+    if (nextState.dateStart !== this.props.dateStart && nextState.dateEnd !== this.props.dateEnd) {
       this.props.changeDates(nextState.dateStart, nextState.dateEnd)
     }
   }
@@ -56,13 +58,15 @@ export default class ChooseDateAndTime extends Component {
         isShowCalendar: false,
         dateStart,
         dateEnd,
-        dayText: this.makeDayText(dateStart)
+        dayText: this.makeDayText(dateStart),
+        dayDate: date
       });
     }
     else {
       this.setState({
         isShowCalendar: false,
-        dayText: this.makeDayText(date)
+        dayText: this.makeDayText(date),
+        dayDate: date
       });
     }
 
@@ -77,7 +81,8 @@ export default class ChooseDateAndTime extends Component {
   handleStartTimeChange = (e) => {
     const dateStart = this.state.dateStart;
     const timeText = e.target.value;
-    const dateFromText = this.dateFromText(dateStart, timeText)
+    const date = dateStart || this.props.selectedDate;
+    const dateFromText = this.dateFromText(date, timeText)
     if (dateFromText) {
       this.setState({
         startTimeText: timeText,
@@ -94,7 +99,8 @@ export default class ChooseDateAndTime extends Component {
   handleEndTimeChange = (e) => {
     const dateEnd = this.state.dateEnd;
     const timeText = e.target.value;
-    const dateFromText = this.dateFromText(dateEnd, timeText);
+    const date = dateEnd || this.props.selectedDate;
+    const dateFromText = this.dateFromText(date, timeText);
     if (dateFromText) {
       this.setState({
         endTimeText: timeText,
@@ -109,7 +115,7 @@ export default class ChooseDateAndTime extends Component {
   }
 
   dateFromText = (date, timeText) => {
-    const timeArray = timeText.split(/[\.:-]/)
+    const timeArray = timeText.split(/[\.:-]/);
     if (timeArray.length == 2 && timeArray[0].length == 2 && timeArray[1].length == 2) {
       if (/^\d+$/.test(timeArray[0]) && /^\d+$/.test(timeArray[0])) {
         const integerHour = parseInt(timeArray[0]);
@@ -141,16 +147,13 @@ export default class ChooseDateAndTime extends Component {
 
   render() {
     const locale = "ru";
-    const {
-      dateStart,
-      dateEnd
-    } = this.props;
 
     const {
       isShowCalendar,
       startTimeText,
       endTimeText,
-      dayText
+      dayText,
+      dayDate
     } = this.state;
     return (
       <div>
@@ -161,11 +164,11 @@ export default class ChooseDateAndTime extends Component {
             {isShowCalendar
               ?
               <DayPicker
-                selectedDays={dateStart}
+                selectedDays={dayDate}
                 onDayClick={this.handleDayClick}
-                month={dateStart}
-                fromMonth={dateStart}
-                toMonth={new Date(dateStart.getFullYear(), dateStart.getMonth() + 2)}
+                month={dayDate}
+                fromMonth={dayDate}
+                toMonth={new Date(dayDate.getFullYear(), dayDate.getMonth() + 2)}
                 locale={locale}
                 months={MONTHS[locale]}
                 weekdaysLong={WEEKDAYS_LONG[locale]}

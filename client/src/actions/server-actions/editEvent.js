@@ -1,34 +1,40 @@
 export const EDIT_EVENT = "EDIT_EVENT";
 
-const query = `mutation editEvent($input: EventCreateInput!, $roomId: ID!, $usersIds: [ID]) {
-  editEvent (
-    input: $input
-    roomId: $roomId,
-    usersIds: $usersIds
-  ){
-    id
-  }
-}`
 
+const editEventQuery  = `
+mutation editEvent($id: ID! $input: EventUpdateInput!, $addedUsersIds: [ID], $removedUsersIds: [ID] ) {
+  updateEvent (id: $id, input: $input) { id }
+  addUsersToEvent (id: $id, usersIds: $addedUsersIds) { id }
+  removeUsersFromEvent (id: $id, usersIds: $removedUsersIds) {id }
+}
+`
+
+const makeEditEventQuery = (eventData) => {
+  const id = eventData.id;
+  const input = eventData.event;
+  const addedUsersIds = eventData.addedUsers || [];
+  const removedUsersIds = eventData.removedUsers || [];
+  if(eventData.event) {
+    return {
+      query: editEventQuery,
+      variables: {
+        id,
+        input,
+        addedUsersIds,
+        removedUsersIds
+      }
+    }
+  }
+}
 
 export default function editEvent(eventData) {
-  const input = {
-    title: eventData.title.toString(),
-    dateStart: eventData.dateStart.toISOString(),
-    dateEnd: eventData.dateEnd.toISOString()
-  }
-  const roomId = parseInt(eventData.roomId).toString();
-  const usersIds = eventData.usersIds.map(id => parseInt(id));
+  const {query, variables} = makeEditEventQuery(eventData);
+  debugger;
   return dispatch => {
     return fetch('/graphql', {
       method: 'post',
       body: JSON.stringify({
-        query,
-        variables: {
-          input: input, 
-          roomId,
-          usersIds
-        }
+        query, variables
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +44,7 @@ export default function editEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.editEvent;
+        const event = response.data.updateEvent;
         dispatch({
           type: EDIT_EVENT,
           event: event

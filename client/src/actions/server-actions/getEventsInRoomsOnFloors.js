@@ -8,6 +8,7 @@ const query = `{
     floor
   }
   events {
+    id
     title
     dateStart
     dateEnd

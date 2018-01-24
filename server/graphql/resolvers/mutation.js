@@ -40,10 +40,10 @@ module.exports = {
     return models.Event.create(input)
       .then(event => {
         let promisesArray = []
-        if(roomId) {
+        if (roomId) {
           event.setRoom(roomId)
         }
-        if(usersIds && usersIds.length) {
+        if (usersIds && usersIds.length) {
           event.setUsers(usersIds)
         }
         return event;
@@ -65,10 +65,26 @@ module.exports = {
       });
   },
 
+  addUsersToEvent(root, { id, usersIds }, context) {
+    return models.Event.findById(id)
+      .then(event => {
+        usersIds.map((usersId) => event.addUser(usersId));
+        return event;
+      });
+  },
+
   removeUserFromEvent(root, { id, userId }, context) {
     return models.Event.findById(id)
       .then(event => {
         event.removeUser(userId);
+        return event;
+      });
+  },
+
+  removeUsersFromEvent(root, { id, usersIds }, context) {
+    return models.Event.findById(id)
+      .then(event => {
+        usersIds.map((usersId) => event.removeUser(usersId));
         return event;
       });
   },

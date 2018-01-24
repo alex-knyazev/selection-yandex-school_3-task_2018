@@ -60,7 +60,7 @@
   outline: none;
 }
 
-.editEventGrid .inputName {
+.editEventGrid .yourRoom {
   display: block;
   margin-top: 2px;
   font-size: 13px;
@@ -298,7 +298,6 @@
 
 .choosedRoomBlock {
   grid-area: choosedRoom;
-  height: 60px;
 }
 
 .choosedRoomBlock .eventInfo {
@@ -330,6 +329,29 @@
 .choosedRoomBlock .eventInfo .clearInfoButton:hover {
   transform: scale(1.1);
 }
+
+.choosedRoomBlock .eventInfo > div:first-child {
+  display: flex;
+  margin-left: 1%;
+  margin-right: 5%;
+}
+
+.choosedRoomBlock .infoMessage {
+  margin-top: 4px;
+  font-size: 12px;
+  height: 38px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #E9ECEF;
+  border-radius: 4px;
+}
+
+.choosedRoomBlock .infoMessage p{
+  margin: 0;
+}
+
 
 /*footer*/
 
@@ -375,13 +397,22 @@
 
 .footer button, .eventModal button {
   height: 36px;
-  padding: 10px 16px;
+  padding: 0px;
   border: none;
   border-radius: 4px;
   outline: none;
   cursor: pointer;
   font-size: 13px;
   background-color: rgb(233, 236, 239);
+}
+.footer button a, .eventModal button a {
+  box-sizing: border-box;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.footer button > b, .eventModal button > b {
+  padding: 10px 16px;
 }
 .footer button:hover {
   background-color: rgba(0,16,33,0.1);
@@ -392,6 +423,7 @@
 
 .footer .cancelButton {
   grid-area: cancelButton;
+  color:black;
 }
 
 .footer .deleteButton {

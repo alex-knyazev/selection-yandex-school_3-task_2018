@@ -27,7 +27,7 @@ export default class ChoosedRoom extends Component {
     let time = this.makeTimeText();
     return (
       <div>
-        <span className="inputName">Ваша переговорка</span>
+        <span className="yourRoom">Ваша переговорка</span>
         <div className="eventInfo">
           <div>
             <div><b>{time}</b></div>

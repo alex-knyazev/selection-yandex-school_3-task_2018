@@ -5,6 +5,7 @@ import InputTitle from '../InputTitle';
 import SelectMembers from '../SelectMembers';
 import ChooseDateAndTime from '../ChooseDateAndTime';
 import ChoosedRoom from '../ChoosedRoom';
+import RecommendationRooms from '../RecommendationRooms';
 import Footer from './Footer'
 
 import getUsers from '../../../actions/server-actions/getUsers'
@@ -25,7 +26,7 @@ class CreateEvent extends Component {
 
   componentWillMount = () => {
     this.props.getUsers();
-    if(this.props.location.state) {
+    if (this.props.location.state) {
       const defaultInfo = {
         dateStart: this.props.location.state.emptyTimeStart,
         dateEnd: this.props.location.state.emptyTimeEnd,
@@ -42,7 +43,8 @@ class CreateEvent extends Component {
     }
     else {
       const defaultInfo = {
-        dateStart: this.props.selectedDate
+        dateStart: this.props.selectedDate,
+        usersIds: []
       }
       this.setState({
         eventDefaultInfo: defaultInfo,
@@ -52,41 +54,39 @@ class CreateEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if(nextProps.createdEvent !== this.props.createdEvent) {
+    if (nextProps.createdEvent !== this.props.createdEvent) {
       this.setState({
         isEventCreated: true
       })
     }
   }
-  
 
   changeTitle = (title) => {
     const currentInfo = this.state.newEventInfo;
     this.setState({
-      newEventInfo : Object.assign(this.state.newEventInfo, { title } ) 
+      newEventInfo: Object.assign(this.state.newEventInfo, { title })
     })
   }
 
   changeUsersIds = (usersIds) => {
     const currentInfo = this.state.newEventInfo;
-    if(usersIds.length) { 
-      this.setState({
-        newEventInfo : Object.assign(this.state.newEventInfo, { usersIds } ) 
-      })
-    }
+    this.setState({
+      newEventInfo: Object.assign(this.state.newEventInfo, { usersIds })
+    })
+
   }
-  
+
   changeDates = (dateStart, dateEnd) => {
     const currentInfo = this.state.newEventInfo;
     this.setState({
-      newEventInfo : Object.assign(this.state.newEventInfo, { dateStart, dateEnd } ) 
+      newEventInfo: Object.assign(this.state.newEventInfo, { dateStart, dateEnd })
     })
   }
 
-  handleCreateEvent = () =>{
+  handleCreateEvent = () => {
     this.props.createEvent(this.state.newEventInfo);
   }
-  
+
   render() {
     const {
       roomTitle,
@@ -94,9 +94,11 @@ class CreateEvent extends Component {
       newEventInfo
     } = this.state;
     const {
-      dateStart, 
+      dateStart,
       dateEnd,
-      title
+      title,
+      roomId,
+      usersIds
     } = newEventInfo;
     const { allUsers, selectedDate } = this.props;
     return (
@@ -108,15 +110,15 @@ class CreateEvent extends Component {
           </div>
 
           <div className="inputEventThemeBlock">
-            <InputTitle 
-              title={title} 
+            <InputTitle
+              title={title}
               changeTitle={this.changeTitle}
             />
           </div>
 
           <div className="chooseDateAndTimeBlock">
-            <ChooseDateAndTime 
-              dateStart={dateStart} 
+            <ChooseDateAndTime
+              dateStart={dateStart}
               dateEnd={dateEnd}
               selectedDate={selectedDate}
               changeDates={this.changeDates}
@@ -124,24 +126,37 @@ class CreateEvent extends Component {
           </div>
 
           <div className="selectEventMembersBlock">
-            <SelectMembers 
+            <SelectMembers
               changeUsersIds={this.changeUsersIds}
               allUsers={allUsers}
             />
           </div>
 
           <div className="choosedRoomBlock">
-            <ChoosedRoom 
-              roomTitle={roomTitle} 
-              floorTitle={floorTitle}
-              dateStart={dateStart}
-              dateEnd={dateEnd}
-            />
+            {roomId 
+              ?
+              <ChoosedRoom
+                roomTitle={roomTitle}
+                floorTitle={floorTitle}
+                dateStart={dateStart}
+                dateEnd={dateEnd}
+              /> 
+              :
+              <RecommendationRooms 
+                dateStart={dateStart}
+                dateEnd={dateEnd}
+                usersIds={usersIds}
+              /> 
+            }
           </div>
+
         </div>
 
         <div className="footer">
-          <Footer isEventCreated={this.state.isEventCreated} handleCreateEvent={this.handleCreateEvent}/>
+          <Footer
+            isEventCreated={this.state.isEventCreated}
+            handleCreateEvent={this.handleCreateEvent}
+          />
         </div>
       </div>
     )
@@ -159,4 +174,4 @@ const mapDispatchToProps = {
   createEvent
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (CreateEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

@@ -31,11 +31,13 @@ export default class Footer extends Component {
     }
     return (
       <div>
-        <Link to="/">
-          <button className="cancelButton" onClick={this.handleCancelButtonClick}>
+
+        <button className="cancelButton" onClick={this.handleCancelButtonClick}>
+          <Link to="/">
             <b>Отмена</b>
-          </button>
-        </Link>
+          </Link>
+        </button>
+
         <button className="saveButton" onClick={this.handleSaveButtonClick}><b>Создать встречу</b></button>
         <EventCreatedModal isOpen={this.props.isEventCreated} handleOkButtonClick={this.handleOkButtonClick} />
       </div>

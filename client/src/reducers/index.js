@@ -8,6 +8,7 @@ import eventsInRoomsOnFloors from './server-data/eventsInRoomsOnFloors';
 import users from './server-data/users';
 import createdEvent from './server-data/createdEvent';
 import editedEvent from './server-data/editedEvent';
+import deletedEvent from './server-data/deletedEvent';
 
 export default combineReducers({
   scheduleHeight,
@@ -15,5 +16,7 @@ export default combineReducers({
   selectedDate,
   eventsInRoomsOnFloors,
   users,
-  createdEvent
+  createdEvent,
+  editedEvent,
+  deletedEvent
 });

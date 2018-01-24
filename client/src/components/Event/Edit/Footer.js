@@ -13,7 +13,6 @@ export default class Footer extends Component {
     }
   }
 
-
   handleDeleteButtonClick = () => {
     this.setState({
       isShowDeleteWarning: true
@@ -25,10 +24,13 @@ export default class Footer extends Component {
       isShowDeleteWarning: false
     })
   }
+
   handleConfirmDeleteButtonClick = () =>{ 
-    this.setState({
-      isShowDeleteWarning: false
-    })    
+    this.props.handleDeleteEvent()
+  }
+
+  handleSaveButtonClick = () => {
+    this.props.handleEditEvent();
   }
   
 
@@ -37,9 +39,15 @@ export default class Footer extends Component {
       <div>
         <div>
         </div>
-        <button className="cancelButton"><b>Отмена</b></button>
-        <button className="deleteButton" onClick={this.handleDeleteButtonClick}><b>Удалить встречу</b></button>
-        <button className="saveButton"><b>Сохранить</b></button>
+        <button className="cancelButton">
+          <b>Отмена</b>
+        </button>
+        <button className="deleteButton" onClick={this.handleDeleteButtonClick}>
+          <b>Удалить встречу</b>
+        </button>
+        <button className="saveButton" onClick={this.handleSaveButtonClick}>
+          <b>Сохранить</b>
+        </button>
         <Modal
           isOpen={this.state.isShowDeleteWarning}
           contentLabel="Modal"

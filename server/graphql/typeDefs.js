@@ -81,7 +81,9 @@ type Mutation {
   createEvent(input: EventCreateInput!, usersIds: [ID], roomId: ID!): Event
   updateEvent(id: ID!, input: EventUpdateInput!): Event
   removeUserFromEvent(id: ID!, userId: ID!): Event
+  removeUsersFromEvent(id: ID!, usersIds: [ID]): Event
   addUserToEvent(id: ID!, userId: ID!): Event
+  addUsersToEvent(id: ID!, usersIds: [ID]): Event
   changeEventRoom(id: ID!, roomId: ID!): Event
   removeEvent(id: ID!): Event
 }
