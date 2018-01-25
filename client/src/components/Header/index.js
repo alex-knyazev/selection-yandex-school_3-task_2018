@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-
 import { withRouter, Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 
-import './header.css'
+import './index.css'
 
 class Header extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class Header extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     const pathname = nextProps.location.pathname;
-    const isShowCreateButton =  this.checkIfShowCreateButton(pathname);
+    const isShowCreateButton = this.checkIfShowCreateButton(pathname);
     this.setState({
       isShowCreateButton: isShowCreateButton
     })
@@ -58,7 +57,6 @@ class Header extends Component {
                   </span>
                 </button>
               </Link>
-
               :
               null
             }

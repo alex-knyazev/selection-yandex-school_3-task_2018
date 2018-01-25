@@ -156,7 +156,6 @@ class Room extends Component {
         emptyTime.rightInsert.emptyTimeEnd = dayDateEnd;
       }
     }
-
     return emptyTime;
   }
 

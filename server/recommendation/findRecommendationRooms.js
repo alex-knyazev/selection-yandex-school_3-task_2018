@@ -52,7 +52,6 @@ const findRecommendationRooms = async (req, res) => {
       eventsByRooms[eventRoom].push(events[i]);
     } 
   }
-  debugger;
   for(let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
     const roomForAnalyze = new RoomForAnalyze(room, eventsByRooms[room.id]);

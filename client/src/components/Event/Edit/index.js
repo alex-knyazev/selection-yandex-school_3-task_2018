@@ -46,8 +46,7 @@ class EditEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.editedEvent !== this.props.editedEvent || 
-        nextProps.deletedEvent !== this.props.deletedEvent) {
+    if (nextProps.eventMutation !== this.props.eventMutation ) {
       this.setState({
         isRedirectToMain: true
       })
@@ -211,8 +210,7 @@ class EditEvent extends Component {
 
 const mapStateToProps = (state) => ({
   allUsers: state.users,
-  editedEvent: state.editedEvent,
-  deletedEvent: state.deletedEvent
+  eventMutation: state.eventMutation,
 })
 
 const mapDispatchToProps = {

@@ -54,7 +54,7 @@ class CreateEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.createdEvent !== this.props.createdEvent) {
+    if (nextProps.eventMutation !== this.props.eventMutation) {
       this.setState({
         isEventCreated: true
       })
@@ -166,7 +166,7 @@ class CreateEvent extends Component {
 const mapStateToProps = (state) => ({
   allUsers: state.users,
   selectedDate: state.selectedDate,
-  createdEvent: state.createdEvent
+  eventMutation: state.eventMutation
 })
 
 const mapDispatchToProps = {

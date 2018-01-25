@@ -3,18 +3,17 @@ import { connect } from 'react-redux'
 
 import HourColumn from './HourColumn'
 
-import './gridTimeColumn.css'
+import './index.css'
 
 import { setScheduleHeight } from '../../../../actions/ui/scheduleHeight'
 
 class GridTimeColumn extends Component {
 
   findScheduleHeight = (e) => {
-    if(e) {
+    if (e) {
       const scheduleHeight = e.clientHeight;
       this.props.setScheduleHeight(scheduleHeight);
     }
-
   }
 
   makeHoursGrid = () => {
@@ -22,7 +21,7 @@ class GridTimeColumn extends Component {
     let hoursColumns = [];
     for (let i = startHour; i <= endHour + 1; i++) {
       hoursColumns.push(
-        <HourColumn key={"hour_" +i} hours={{startHour: i-1, endHour: i }} />
+        <HourColumn key={"hour_" + i} hours={{ startHour: i - 1, endHour: i }} />
       )
     }
     return hoursColumns;

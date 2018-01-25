@@ -28,7 +28,6 @@ const makeEditEventQuery = (eventData) => {
 
 export default function editEvent(eventData) {
   const {query, variables} = makeEditEventQuery(eventData);
-  debugger;
   return dispatch => {
     return fetch('/graphql', {
       method: 'post',

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Floor from './Floor';
 
-import './roomEventsColumn.css'
+import './index.css'
 
 class RoomEventsColumn extends Component {
   makeFloors = () => {

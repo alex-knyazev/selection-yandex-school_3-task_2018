@@ -46,9 +46,7 @@ class CurrentTime extends Component {
     const { startHour, endHour } = this.props.startAndEndHours;
     let date = new Date();
     let hour = date.getHours();
-    let minutes = date.getMinutes(); 
-    hour = 12;
-    debugger;   
+    let minutes = date.getMinutes();   
     if (hour -1  < startHour || hour >= endHour) {
       return null;
     }
