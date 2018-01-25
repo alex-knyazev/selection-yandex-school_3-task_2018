@@ -1,4 +1,4 @@
-import { GET_RECOMMENDATION_ROOMS } from '../../actions/server-actions/getRecommendationRooms';
+import { GET_RECOMMENDATION_ROOMS } from '../../actions/server-actions/recommendations/get';
 
 const initialState = [];
 

@@ -1,4 +1,3 @@
-
 import { SET_SELECTED_DATE } from '../../actions/ui/selectedDate.js';
 
 const initialState = new Date();

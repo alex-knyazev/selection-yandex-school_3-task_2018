@@ -1,22 +1,20 @@
 import { combineReducers } from 'redux';
 
+//ui-actions reducers
 import scheduleHeight from './ui/scheduleHeight';
 import startAndEndHours from './ui/startAndEndHours';
 import selectedDate from './ui/selectedDate';
 
-import eventsInRoomsOnFloors from './server-data/eventsInRoomsOnFloors';
+//server-actions reducers
+import eventsOnFloors from './server-data/eventsOnFloors';
 import users from './server-data/users';
-import createdEvent from './server-data/createdEvent';
-import editedEvent from './server-data/editedEvent';
-import deletedEvent from './server-data/deletedEvent';
+import eventMutation from './server-data/eventMutation'
 
 export default combineReducers({
   scheduleHeight,
   startAndEndHours,
   selectedDate,
-  eventsInRoomsOnFloors,
+  eventsOnFloors,
   users,
-  createdEvent,
-  editedEvent,
-  deletedEvent
+  eventMutation
 });

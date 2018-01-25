@@ -1,6 +1,5 @@
 export const EDIT_EVENT = "EDIT_EVENT";
 
-
 const editEventQuery  = `
 mutation editEvent($id: ID! $input: EventUpdateInput!, $addedUsersIds: [ID], $removedUsersIds: [ID] ) {
   updateEvent (id: $id, input: $input) { id }

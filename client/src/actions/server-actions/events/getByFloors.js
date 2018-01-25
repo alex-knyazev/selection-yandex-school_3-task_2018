@@ -1,4 +1,4 @@
-export const EVENTS_IN_ROOMS_ON_FLOORS = "EVENTS_IN_ROOMS_ON_FLOORS";
+export const GET_EVENTS_BY_FLOORS = 'GET_EVENTS_BY_FLOORS'
 
 const query = `{ 
 	rooms {
@@ -42,7 +42,7 @@ export default function getEventsInRooms(date) {
       .then((response) => {
         const eventsInRoomsOnFloors = findEventsInRoomsOnFloors(response, date);
         dispatch({
-          type: EVENTS_IN_ROOMS_ON_FLOORS,
+          type: GET_EVENTS_BY_FLOORS,
           eventsInRoomsOnFloors
         })
       });

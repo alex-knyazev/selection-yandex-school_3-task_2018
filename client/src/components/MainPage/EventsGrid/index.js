@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-
 import { PacmanLoader} from 'react-spinners';
+
+import getEventsInRoomsOnFloors from '../../../actions/server-actions/recommendations/get';
 
 import RoomEventsColumn from './RoomEventsColumn';
 import GridTimeColumn from './GridTimeColumn';
-
-import getEventsInRoomsOnFloors from '../../../actions/server-actions/getEventsInRoomsOnFloors';
 
 class EventsGrid extends Component {
   constructor(props) {

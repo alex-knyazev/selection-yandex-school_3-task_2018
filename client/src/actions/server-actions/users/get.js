@@ -9,7 +9,7 @@ const query = `{
   }
 }`;
 
-export default function getEventsInRooms(date) {
+export default function getUsers(date) {
   return dispatch => {
     return fetch('/graphql', {
       method: 'post',
