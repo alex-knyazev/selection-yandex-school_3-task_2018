@@ -12,12 +12,18 @@ class RoomForAnalyze {
   }
 
   sortByDate(roomEvents) {
-    
+    if(!roomEvents) {
+      return [];
+    }
+    const sortedRoomEvents = roomEvents.sort((event1, event2) => ( 
+      new Date(event1.dateStart) - new Date(event2.dateStart)
+    ))
+    return sortedRoomEvents;
   }
 
   findFreeTime() {
     const roomEvents = this.roomEvents;
-
+    
   }
 
   checkIfTimeIsFree({dateStart, dateEnd}) {
@@ -52,13 +58,12 @@ const findRecommendationRooms = async (req, res) => {
       eventsByRooms[eventRoom].push(events[i]);
     } 
   }
-  debugger;
   for(let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
     const roomForAnalyze = new RoomForAnalyze(room, eventsByRooms[room.id]);
-    roomForAnalyze.checkIfTimeIsFree({dateStart, dateEnd})
+    roomForAnalyze.checkIfTimeIsFree({dateStart, dateEnd});
   }
-  res.send(result);
+  res.send({data: 22});
 }
 
 module.exports.findRecommendationRooms = findRecommendationRooms;

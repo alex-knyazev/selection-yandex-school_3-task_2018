@@ -28,7 +28,7 @@ export default class SelectMembers extends Component {
   
   addUser = (user) => {
     const currentMembers = this.state.choosedMembers;
-    let newMembers = currentMembers.map((el,inde ) => el);
+    let newMembers = currentMembers.map((el) => el);
     newMembers.push(user);
     this.setState({
       choosedMembers: newMembers,

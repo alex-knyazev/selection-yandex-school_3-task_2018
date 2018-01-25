@@ -44,6 +44,11 @@ function createData () {
       title: '14',
       capacity: 6,
       floor: 3
+    },
+    {
+      title: 'myRoom',
+      capacity: 2,
+      floor: 2
     }
   ]);
 
@@ -52,7 +57,12 @@ function createData () {
   let oneHourLater = new Date(now.getTime() + HOUR);
   let twoHoursLater = new Date(oneHourLater.getTime() + HOUR);
   let threeHoursLater = new Date(twoHoursLater.getTime() + HOUR);
+  let hour = [];
+  for (let i = 0; i < 12; i++) {
+    const time = new Date(new Date().setHours((now.getHours() + i) - 8));
 
+    hour[i] = time
+  }
   let eventsPromise = models.Event.bulkCreate([
     {
       title: 'ШРИ 2018 - начало',
@@ -66,9 +76,40 @@ function createData () {
     },
     {
       title: '🍨 Пробуем kefir.js',
-      dateStart: twoHoursLater,
-      dateEnd: threeHoursLater
-    }
+      dateStart: hour[0],
+      dateEnd: hour[1]
+    },
+    {
+      title: 'Тестируем продукт1',
+      dateStart: hour[1],
+      dateEnd: hour[2]
+    },
+    {
+      title: 'Тестируем продукт2',
+      dateStart: hour[2],
+      dateEnd: hour[3]
+    },
+    {
+      title: 'Тестируем продукт4',
+      dateStart: hour[3],
+      dateEnd: hour[4]
+    },
+    {
+      title: 'Тестируем продукт5',
+      dateStart: hour[5],
+      dateEnd: hour[6]
+    },
+    {
+      title: 'Тестируем продукт6',
+      dateStart: hour[8],
+      dateEnd: hour[9]
+    },
+    {
+      title: 'Тестируем продукт6',
+      dateStart: hour[9],
+      dateEnd: hour[10]
+    },
+    
   ]);
 
   Promise.all([usersPromise, roomsPromise, eventsPromise])
@@ -82,6 +123,13 @@ function createData () {
       promises.push(events[0].setRoom(rooms[0]));
       promises.push(events[1].setRoom(rooms[1]));
       promises.push(events[2].setRoom(rooms[2]));
+
+      promises.push(events[3].setRoom(rooms[5]));
+      promises.push(events[4].setRoom(rooms[5]));
+      promises.push(events[5].setRoom(rooms[5]));
+      promises.push(events[6].setRoom(rooms[5]));
+      promises.push(events[7].setRoom(rooms[5]));
+      promises.push(events[8].setRoom(rooms[5]));
 
       promises.push(events[0].setUsers([users[0], users[1]]));
       promises.push(events[1].setUsers([users[1], users[2]]));

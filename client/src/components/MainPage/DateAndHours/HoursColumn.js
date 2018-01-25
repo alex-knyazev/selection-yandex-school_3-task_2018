@@ -84,7 +84,6 @@ class CurrentTime extends Component {
     let hour = date.getHours();
     let minutes = date.getMinutes();    
     if (hour -1  < startHour || hour >= endHour) {
-
       return null;
     }
     let currentTime = this.getCurrentTime(hour, minutes);
