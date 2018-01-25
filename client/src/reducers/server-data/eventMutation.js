@@ -9,7 +9,7 @@ export default (state = initialState, action = {}) => {
         case CREATE_EVENT:
         case EDIT_EVENT:
         case DELETE_EVENT:
-            return action.event
+            return action.payload
         default:
             return state;
     }

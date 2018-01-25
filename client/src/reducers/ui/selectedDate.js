@@ -5,7 +5,7 @@ const initialState = new Date();
 export default (state = initialState, action = {}) => {
     switch(action.type) {
         case SET_SELECTED_DATE:
-            return action.selectedDate;
+            return action.payload;
         default:
             return state;
     }

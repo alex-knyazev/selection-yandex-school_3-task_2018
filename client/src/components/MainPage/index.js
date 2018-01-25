@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import EventsGrid from './EventsGrid';
 import DateAndHours from './DateAndHours'
 
-import './mainPage.css';
-
+import './index.css';
 
 export default class MainPage extends Component {
   render() {

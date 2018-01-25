@@ -7,12 +7,12 @@ import './roomEventsColumn.css'
 class RoomEventsColumn extends Component {
   makeFloors = () => {
     let floorsElements = [];
-    for(let floor in this.props.eventsInRoomsOnFloors) {
+    for(let floor in this.props.eventsByFloors) {
       floorsElements.push(
         <Floor
           key={floor + "_floor"}
           title={floor + " этаж"}
-          rooms={this.props.eventsInRoomsOnFloors[floor]}
+          rooms={this.props.eventsByFloors[floor]}
         />
       )
     }

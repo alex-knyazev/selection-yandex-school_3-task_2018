@@ -58,7 +58,7 @@ const findRecommendationRooms = async (req, res) => {
     const roomForAnalyze = new RoomForAnalyze(room, eventsByRooms[room.id]);
     roomForAnalyze.checkIfTimeIsFree({dateStart, dateEnd})
   }
-  res.send(result);
+  res.send({data:22});
 }
 
 module.exports.findRecommendationRooms = findRecommendationRooms;

@@ -43,10 +43,10 @@ export default function editEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.updateEvent;
+        const payload = response.data.updateEvent;
         dispatch({
           type: EDIT_EVENT,
-          event: event
+          payload
         })
       });
   }

@@ -24,10 +24,10 @@ export default function getUsers(date) {
         return response.json();
       })
       .then((response) => {
-        const users = response.data.users;
+        const payload = response.data.users;
         dispatch({
           type: GET_USERS,
-          users: users
+          payload
         })
       });
   }

@@ -50,7 +50,7 @@ class Event extends Component {
       isRedirectToEditEvent: true
     })
   }
-
+  
   render() {
     if (this.state.isRedirectToEditEvent) {
       
@@ -101,7 +101,6 @@ class Event extends Component {
                       :
                       null
                   }
-
                 </div>
               </div>
             </div>

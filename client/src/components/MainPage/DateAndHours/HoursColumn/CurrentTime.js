@@ -1,40 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
-class HoursColumn extends Component {
-
-  makeHours = () => {
-    const { startHour, endHour } = this.props.startAndEndHours;
-    let hours = [];
-    for (let i = startHour; i <= endHour; i++) {
-      let hour = i;
-      if (i === startHour) {
-        hour = `${i}.00`
-      }
-      hours.push(
-        <div key={ i +"_hour"} className="hour">
-          {hour}
-        </div>
-      )
-    }
-    return hours;
-  }
-
-  render() {
-    const hours = this.makeHours();
-    return (
-      <div className="hoursColumn">
-        {hours}
-        <CurrentTime 
-          height={this.props.scheduleHeight}
-          startAndEndHours={this.props.startAndEndHours}
-        />
-      </div>
-    )
-  }
-
-}
-
 
 class CurrentTime extends Component {
   constructor(props) {
@@ -82,11 +46,13 @@ class CurrentTime extends Component {
     const { startHour, endHour } = this.props.startAndEndHours;
     let date = new Date();
     let hour = date.getHours();
-    let minutes = date.getMinutes();    
+    let minutes = date.getMinutes(); 
+    hour = 12;
+    debugger;   
     if (hour -1  < startHour || hour >= endHour) {
-
       return null;
     }
+
     let currentTime = this.getCurrentTime(hour, minutes);
     let timeCircleMarginPercent = this.getTimeCircleMargin(hour, minutes);
     const heightOfCurrentTime = this.props.height + 30 + 'px';
@@ -104,9 +70,4 @@ class CurrentTime extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    scheduleHeight: state.scheduleHeight,
-    startAndEndHours: state.startAndEndHours
-})
-
-export default connect(mapStateToProps)(HoursColumn);
+export default CurrentTime;

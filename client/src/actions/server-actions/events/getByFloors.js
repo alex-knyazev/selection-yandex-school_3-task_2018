@@ -40,10 +40,10 @@ export default function getEventsInRooms(date) {
         return response.json();
       })
       .then((response) => {
-        const eventsInRoomsOnFloors = findEventsInRoomsOnFloors(response, date);
+        const payload = findEventsInRoomsOnFloors(response, date);
         dispatch({
           type: GET_EVENTS_BY_FLOORS,
-          eventsInRoomsOnFloors
+          payload
         })
       });
   }

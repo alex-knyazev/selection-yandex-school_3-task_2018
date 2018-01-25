@@ -20,9 +20,10 @@ export default function getEventsInRooms(date) {
         return response.json();
       })
       .then((response) => {
+        const payload = response.data;
         dispatch({
           type: GET_RECOMMENDATION_ROOMS,
-          recommendationRooms: response.data
+          payload
         })
       });
   }

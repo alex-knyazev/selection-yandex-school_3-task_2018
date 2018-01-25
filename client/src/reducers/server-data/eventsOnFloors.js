@@ -5,7 +5,7 @@ const initialState = [];
 export default (state = initialState, action = {}) => {
     switch(action.type) {
         case GET_EVENTS_BY_FLOORS:
-            return action.eventOnFloors;
+            return action.payload;
         default:
             return state;
     }

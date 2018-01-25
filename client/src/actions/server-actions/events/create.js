@@ -37,10 +37,10 @@ export default function createEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.createEvent;
+        const payload = response.data.createEvent;
         dispatch({
           type: CREATE_EVENT,
-          event: event
+          payload
         })
       });
   }

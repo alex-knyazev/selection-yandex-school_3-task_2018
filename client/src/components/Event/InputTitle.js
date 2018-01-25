@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import closeButton from './../../assets/close.svg'
 
 export default class InputTitle extends Component {
-  
   constructor(props) {
     super(props)
     this.state = {

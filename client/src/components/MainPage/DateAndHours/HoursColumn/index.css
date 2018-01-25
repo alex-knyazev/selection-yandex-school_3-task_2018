@@ -1,0 +1,77 @@
+.dateAndHours .hoursColumn {
+  grid-area: hoursColumn;
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  border-top: 1px solid rgb(240,240,240);
+  border-bottom: 1px solid rgb(240,240,240);
+}
+@media screen and (max-width: 764px) {
+  .dateAndHours .hoursColumn {
+    width: var(--mobile-right-column-width);
+    height: 32px;
+  }
+}
+
+.dateAndHours .hoursColumn .hour {
+  flex-grow: 1;
+  height: 13px;
+  font-family: HelveticaNeue, Open Sans, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #858E98;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+.dateAndHours .hoursColumn .hour:first-child {
+  margin-left: -3px;
+}
+
+
+.dateAndHours .hoursColumn .currentTime {
+  width: 6.29%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+.dateAndHours .hoursColumn .currentTime .time {
+  width: 49px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background: #007DFF;
+  border-radius: 100px;
+  font-family:  HelveticaNeue, Open Sans, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+
+.dateAndHours .hoursColumn .currentTime .timeLine {
+  position: absolute;
+  left: 50%;
+  border-top: 1px solid #007DFF;
+  border-right: 1px solid #007DFF;
+  height: 100vh;
+  z-index: 10;
+}
+
+.emptyWhite {
+  display: none;
+}
+@media screen and (max-width: 764px) {
+  .emptyWhite  {
+    display: block;
+    background-color: white;
+    grid-area: emptyWhite;
+    z-index: 2;
+    border-top: 1px solid rgb(240,240,240);
+    border-bottom: 1px solid rgb(240,240,240);
+    box-sizing: border-box;
+  }
+}
