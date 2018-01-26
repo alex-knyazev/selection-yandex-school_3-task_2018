@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import TextTruncate from 'react-text-truncate';
 import classNames from 'classnames';
+import { addFreeTimeBetweenRanges } from 'add-free-time-between-ranges'
 
 import Event from './Event';
 import EmptyTime from './EmptyTime';
@@ -47,10 +48,18 @@ class Room extends Component {
 
   makeEventsElements = () => {
     const eventsData = this.props.roomData.events;
+    const { startHour, endHour } = this.props.startAndEndHours;
+    const eventDataWithFreeTime = addFreeTimeBetweenRanges({
+      rangeDateStart: new Date(new Date().setHours(startHour,0,0,0)),
+      rangeDateEnd: new Date(new Date().setHours(endHour,0,0,0)),
+      timeSlots: eventsData,
+      isSplitByHour: true
+    })
+    debugger;
     const roomId = this.props.roomData.id;
     const roomTitle = this.props.roomData.title;
     const floorTitle = this.props.roomData.floor + ' этаж';
-    const { startHour, endHour } = this.props.startAndEndHours;
+
     let eventsElements = [];
     let isFullBusy = true;
     if (!eventsData.length) {
@@ -151,7 +160,7 @@ class Room extends Component {
       const dayDateEnd = new Date(new Date(event.dateEnd).setHours(endHour, 0, 0))
       if (eventDateEnd < dayDateEnd) {
         let durationInHours = (dayDateEnd - eventDateEnd) / 1000 / 60 / 60;
-        emptyTime.rightInsert.widthPercents  = durationInHours / (endHour - startHour) * 100;
+        emptyTime.rightInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
         emptyTime.rightInsert.emptyTimeStart = eventDateEnd;
         emptyTime.rightInsert.emptyTimeEnd = dayDateEnd;
       }
@@ -179,7 +188,7 @@ class Room extends Component {
       <div className={roomClasses}>
         <div
           className={roomInfoClasses}
-          style={isRoomInfoHidden ? { transform: 'translate('+( scrollLeftPixels + 'px)' )} : {}}
+          style={isRoomInfoHidden ? { transform: 'translate(' + (scrollLeftPixels + 'px)') } : {}}
         >
           <div className="roomInfoName">
             {!isRoomInfoHidden
@@ -189,7 +198,7 @@ class Room extends Component {
                 truncateText="…"
                 text={title}
               />
-              : <span>{ title } </span>
+              : <span>{title} </span>
             }
 
           </div>
