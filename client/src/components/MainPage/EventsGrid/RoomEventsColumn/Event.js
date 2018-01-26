@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 
-import edit from '../../../../assets/edit.svg'
+import EventTooltip from './EventTooltip';
 
 class Event extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class Event extends Component {
       isShowEventToolTip: false,
       isRedirectToEditEvent: false
     }
+    this.handleEditEventClick = this.handleEditEventClick.bind(this); 
   }
 
   calculateWidth = () => {
@@ -53,7 +54,6 @@ class Event extends Component {
   
   render() {
     if (this.state.isRedirectToEditEvent) {
-      
       return (
         <Redirect to={{
           pathname: "/editEvent",
@@ -71,6 +71,7 @@ class Event extends Component {
     const amountPeople = users.length
     const mentor = users[0];
     let time = this.makeTimeText();
+
     return (
       <div
         className="event"
@@ -78,35 +79,15 @@ class Event extends Component {
         onClick={this.handleEventClick}
         onMouseOut={this.hideEventInfo}
       >
-        {
-          this.state.isShowEventToolTip
-            ?
-            <div className="eventToolTipParent">
-              <div className="eventTooltip">
-                <div className="triangleBorder"></div>
-                <div className="editEventButton" onClick={this.handleEditEventClick}>
-                  <img alt="edit event" src={edit} />
-                </div>
-                <div className="eventInfo">
-                  <h1>{title}</h1>
-                  <p>{time}  &#183; {room.title} </p>
-                  {
-                    amountPeople
-                      ?
-                      <p>
-                        <img alt="mentor avatar" src={mentor.avatarUrl} className="mentorAvatar" />
-                        <span className="mentorName">{mentor.login} </span>
-                        <span className="amountPeople"> и {amountPeople} участников</span>
-                      </p>
-                      :
-                      null
-                  }
-                </div>
-              </div>
-            </div>
-            :
-            null
-        }
+        <EventTooltip 
+          isShowEventToolTip={this.state.isShowEventToolTip}
+          amountPeople={amountPeople}
+          mentor={mentor}
+          time={time}
+          room={room}
+          title={title}
+          handleEditEventClick={this.handleEditEventClick}
+        />
       </div>
     )
   }

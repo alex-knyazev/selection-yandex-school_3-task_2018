@@ -4,31 +4,30 @@ import Floor from './Floor';
 
 import './index.css'
 
-class RoomEventsColumn extends Component {
-  makeFloors = () => {
+const RoomEventsColumn = (props) => {
+
+  const makeFloors = () => {
     let floorsElements = [];
-    for(let floor in this.props.eventsByFloors) {
+    for (let floor in props.eventsByFloors) {
       floorsElements.push(
         <Floor
           key={floor + "_floor"}
           title={floor + " этаж"}
-          rooms={this.props.eventsByFloors[floor]}
+          rooms={props.eventsByFloors[floor]}
         />
       )
     }
     return floorsElements;
   }
 
-  render() {
-    const floors = this.makeFloors();
-    return (
-      <div className="roomEventsColumn">
-        <div className="floors">
-          {floors}
-        </div>
+  const floors = makeFloors();
+  return (
+    <div className="roomEventsColumn">
+      <div className="floors">
+        {floors}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default RoomEventsColumn;

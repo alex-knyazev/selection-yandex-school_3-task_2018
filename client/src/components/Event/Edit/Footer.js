@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Modal from 'react-modal';
+import Modal from 'react-modal'
+import { Redirect } from 'react-router-dom'
 
-import warningGirlImg from '../../../assets/warning-girl.png';
+import warningGirlImg from '../../../assets/warning-girl.png'
 
 export default class Footer extends Component {
 
@@ -9,7 +10,8 @@ export default class Footer extends Component {
     super(props)
   
     this.state = {
-      isShowDeleteWarning: false
+      isShowDeleteWarning: false,
+      isRedirectToMain: false
     }
   }
 
@@ -21,7 +23,13 @@ export default class Footer extends Component {
 
   handleCancelButtonClick = () => {
     this.setState({
-      isShowDeleteWarning: false
+      isRedirectToMain: true
+    })
+  }
+
+  handleCancelButtonInWarningClick = () =>{
+    this.setState({
+      isShowDeleteWarning: false,
     })
   }
 
@@ -35,11 +43,14 @@ export default class Footer extends Component {
   
 
   render() {
+    if (this.state.isRedirectToMain) {
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <div>
         </div>
-        <button className="cancelButton">
+        <button className="cancelButton" onClick={this.handleCancelButtonClick}>
           <b>Отмена</b>
         </button>
         <button className="deleteButton" onClick={this.handleDeleteButtonClick}>
@@ -64,7 +75,7 @@ export default class Footer extends Component {
         >
           <img alt="" src={warningGirlImg} />
           <h1>Всреча будет <br/> удалена безвозвратно</h1>
-          <button className="cancelButton" onClick={this.handleCancelButtonClick}><b>Отмена</b></button>
+          <button className="cancelButton" onClick={this.handleCancelButtonInWarningClick}><b>Отмена</b></button>
           <button className="sureDeleteButton" onClick={this.handleConfirmDeleteButtonClick}><b>Удалить</b></button>
         </Modal>
       </div>

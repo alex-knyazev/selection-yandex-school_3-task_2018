@@ -1,4 +1,4 @@
-export default function (dateToCheck) {
+function isToday (dateToCheck) {
   if (new Date().setHours(0, 0, 0, 0) === dateToCheck.setHours(0, 0, 0, 0)) {
     return true;
   }
@@ -6,3 +6,5 @@ export default function (dateToCheck) {
     return  false;
   }
 }
+
+export default isToday;

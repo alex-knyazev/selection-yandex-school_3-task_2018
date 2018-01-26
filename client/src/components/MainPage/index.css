@@ -2,20 +2,16 @@
   --left-column-width: 245px;
   --mobile-right-column-width: 1200px;
 }
-
-
 @media screen and (min-width: 765px) and (max-width: 1024px) {
   :root {
     --left-column-width: 200px;
   }
 }
-
 @media screen and (max-width: 764px) {
   :root {
     --left-column-width: 184px;
   }
 }
-
 
 .schedule .dateAndHours {
   display: grid;
@@ -25,7 +21,6 @@
     "dateColumn hoursColumn";
   background-color: white;
 }
-
 @media screen and (max-width: 764px) {
   .schedule .dateAndHours {
     grid-template-columns: var(--left-column-width) calc(100% - var(--left-column-width));
@@ -36,14 +31,12 @@
   }
 }
 
-
 .schedule .eventsGrid {
   display: grid;
   grid-template-columns: 100% 100%;
   grid-template-areas: 
     "roomEventsColumn gridTimeColumn"
 }
-
 @media screen and (max-width: 764px) {
   .schedule .eventsGrid {
     display: grid;

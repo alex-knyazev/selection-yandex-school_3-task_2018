@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import Room from './Room';
 
-export default class Floor extends Component {
+const Floor = (props) => {
 
-  makeRooms = () => {
-    const { rooms } = this.props;
+  const makeRooms = () => {
+    const { rooms } = props;
     let roomsElements = [];
     for (let i = 0; i < rooms.length; i++) {
       roomsElements.push(
@@ -18,18 +18,18 @@ export default class Floor extends Component {
     return roomsElements;
   }
 
-  render() {
-    const { title } = this.props;
-    const rooms = this.makeRooms()
-    return (
-      <div className="floor">
-        <div className="floorInfo">
-          <div className="floorName">
-            {title}
-          </div>
+  const { title } = props;
+  const rooms = makeRooms()
+  return (
+    <div className="floor">
+      <div className="floorInfo">
+        <div className="floorName">
+          {title}
         </div>
-        {rooms}
       </div>
-    )
-  }
+      {rooms}
+    </div>
+  )
 }
+
+export default Floor;

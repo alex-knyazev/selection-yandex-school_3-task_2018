@@ -24,11 +24,11 @@
     "moment-range": "^3.1.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.7.5",
+    "sequelize": "^4.32.2",
     "sqlite3": "^3.1.9"
   },
   "devDependencies": {
-    "nodemon": "^1.12.5",
+    "nodemon": "^1.14.11",
     "semistandard": "^11.0.0"
   }
 }

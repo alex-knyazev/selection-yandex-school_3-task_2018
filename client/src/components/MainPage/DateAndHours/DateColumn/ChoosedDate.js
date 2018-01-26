@@ -3,7 +3,7 @@ import React from 'react'
 import Calendar from './Calendar'
 
 import { MONTHS_SHORT } from '../../../../localizations/calendarLocalizatons'
-import isToday from '../../../../utils/isToday';
+import isToday from '../../../../utils/isToday'
 
 const ChoosedDate = (props) => {
   const {
@@ -38,9 +38,9 @@ const ChoosedDate = (props) => {
 const getChoosedDateText = (selectedDate) => {
   let day = selectedDate.getDate();
   const month = selectedDate.getMonth();
-  const isToday = isToday(selectedDate);
+  const isDateToday = isToday(selectedDate);
   let additionalPart = '';
-  if (isToday) {
+  if (isDateToday) {
     additionalPart = 'Сегодня';
   }
   if (day.toString().length === 1) {
