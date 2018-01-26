@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import InputTitle from '../InputTitle';
-import SelectMembers from '../SelectMembers';
-import ChooseDateAndTime from '../ChooseDateAndTime';
-import ChoosedRoom from '../ChoosedRoom';
-import RecommendationRooms from '../RecommendationRooms';
-import Footer from './Footer'
+import getUsers from '../../../actions/server-actions/users/get'
+import createEvent from '../../../actions/server-actions/events/create'
 
-import getUsers from '../../../actions/server-actions/getUsers'
-import createEvent from '../../../actions/server-actions/createEvent'
+import InputTitle from '../InputTitle'
+import SelectMembers from '../SelectMembers'
+import ChooseDateAndTime from '../ChooseDateAndTime'
+import ChoosedRoom from '../ChoosedRoom'
+import RecommendationRooms from '../RecommendationRooms'
+import Footer from './Footer'
 
 class CreateEvent extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class CreateEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.createdEvent !== this.props.createdEvent) {
+    if (nextProps.eventMutation !== this.props.eventMutation) {
       this.setState({
         isEventCreated: true
       })
@@ -166,7 +166,7 @@ class CreateEvent extends Component {
 const mapStateToProps = (state) => ({
   allUsers: state.users,
   selectedDate: state.selectedDate,
-  createdEvent: state.createdEvent
+  eventMutation: state.eventMutation
 })
 
 const mapDispatchToProps = {

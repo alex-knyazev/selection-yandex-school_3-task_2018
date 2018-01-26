@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 
-import DateColumn from './DateColumn';
-import HoursColumn from './HoursColumn';
+import DateColumn from './DateColumn'
+import HoursColumn from './HoursColumn'
 
-import './dateAndHours.css'
+import './index.css'
 
-export default class DateEndHours extends Component {
-  render() {
-    return (
-      <div className="dateAndHours">
-        <DateColumn />
-        <div className="emptyWhite"></div>
-        <HoursColumn />
-        
-      </div>
-    )
-  }
+const DateAndHours = () => {
+  return (
+    <div className="dateAndHours">
+      <DateColumn />
+      <div className="emptyWhite"></div>
+      <HoursColumn />
+    </div>
+  )
 }
+
+export default DateAndHours;

@@ -10,7 +10,6 @@ const query = `mutation createEvent($input: EventCreateInput!, $roomId: ID!, $us
   }
 }`
 
-
 export default function createEvent(eventData) {
   const input = {
     title: eventData.title.toString(),
@@ -38,10 +37,10 @@ export default function createEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.createEvent;
+        const payload = response.data.createEvent;
         dispatch({
           type: CREATE_EVENT,
-          event: event
+          payload
         })
       });
   }

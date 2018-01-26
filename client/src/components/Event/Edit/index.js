@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 
-import InputTitle from '../InputTitle';
-import SelectMembers from '../SelectMembers';
-import ChooseDateAndTime from '../ChooseDateAndTime';
-import ChoosedRoom from '../ChoosedRoom';
+import getUsers from '../../../actions/server-actions/users/get'
+import editEvent from '../../../actions/server-actions/events/edit'
+import deleteEvent from '../../../actions/server-actions/events/delete'
+
+import InputTitle from '../InputTitle'
+import SelectMembers from '../SelectMembers'
+import ChooseDateAndTime from '../ChooseDateAndTime'
+import ChoosedRoom from '../ChoosedRoom'
 import Footer from './Footer'
-
-import getUsers from '../../../actions/server-actions/getUsers'
-import editEvent from '../../../actions/server-actions/editEvent'
-import deleteEvent from '../../../actions/server-actions/deleteEvent'
 
 class EditEvent extends Component {
   constructor(props) {
@@ -46,14 +46,12 @@ class EditEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.editedEvent !== this.props.editedEvent || 
-        nextProps.deletedEvent !== this.props.deletedEvent) {
+    if (nextProps.eventMutation !== this.props.eventMutation ) {
       this.setState({
         isRedirectToMain: true
       })
     }
   }
-
 
   changeTitle = (title) => {
     const currentInfo = this.state.newEventInfo;
@@ -212,8 +210,7 @@ class EditEvent extends Component {
 
 const mapStateToProps = (state) => ({
   allUsers: state.users,
-  editedEvent: state.editedEvent,
-  deletedEvent: state.deletedEvent
+  eventMutation: state.eventMutation,
 })
 
 const mapDispatchToProps = {

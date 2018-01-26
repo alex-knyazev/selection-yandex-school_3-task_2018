@@ -23,10 +23,10 @@ export default function createEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.removeEvent;
+        const payload = response.data.removeEvent;
         dispatch({
           type: DELETE_EVENT,
-          event: event
+          payload
         })
       });
   }

@@ -2,12 +2,9 @@
 .header {
   position: relative;
   height: 71px;
-  /*padding-top: 25px;
-  padding-left: 24.6px;
-  padding-right: 24px;
-  padding-bottom: 21.6px;*/
   z-index: 0;
 }
+
 .fixedHeader {
   position: initial;
   width: 100%;

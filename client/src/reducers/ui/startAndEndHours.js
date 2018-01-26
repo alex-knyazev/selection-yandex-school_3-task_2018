@@ -1,4 +1,3 @@
-
 const initialState = {
   startHour: 8,
   endHour: 23 

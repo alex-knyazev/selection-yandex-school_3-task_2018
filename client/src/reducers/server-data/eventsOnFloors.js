@@ -1,11 +1,10 @@
-import { GET_USERS } from '../../actions/server-actions/users/get';
-
+import { GET_EVENTS_BY_FLOORS } from '../../actions/server-actions/events/getByFloors';
 
 const initialState = [];
 
 export default (state = initialState, action = {}) => {
     switch(action.type) {
-        case GET_USERS:
+        case GET_EVENTS_BY_FLOORS:
             return action.payload;
         default:
             return state;

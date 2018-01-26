@@ -1,35 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-
 import { PacmanLoader} from 'react-spinners';
+
+import getEventsByFloors from '../../../actions/server-actions/events/getByFloors';
 
 import RoomEventsColumn from './RoomEventsColumn';
 import GridTimeColumn from './GridTimeColumn';
 
-import getEventsInRoomsOnFloors from '../../../actions/server-actions/getEventsInRoomsOnFloors';
-
 class EventsGrid extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       isLoading: true,
-      eventsInRoomsOnFloors: {}
+      eventsByFloors: {}
     }
   }
 
   componentWillMount = () => {
-    this.props.getEventsInRoomsOnFloors(this.props.selectedDate);
+    this.props.getEventsByFloors(this.props.selectedDate);
   }
 
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.selectedDate !== this.props.selectedDate) {
-      this.props.getEventsInRoomsOnFloors(nextProps.selectedDate);
+      this.props.getEventsByFloors(nextProps.selectedDate);
       return;
     }
-    if (Object.keys(nextProps.eventsInRoomsOnFloors).length) {
+    if (Object.keys(nextProps.eventsByFloors).length) {
       this.setState({
-        eventsInRoomsOnFloors: nextProps.eventsInRoomsOnFloors,
+        eventsByFloors: nextProps.eventsByFloors,
         isLoading: false
       })
     }
@@ -47,7 +45,7 @@ class EventsGrid extends Component {
     else {
       return (
         <div className="eventsGrid">
-          <RoomEventsColumn eventsInRoomsOnFloors={this.state.eventsInRoomsOnFloors} />
+          <RoomEventsColumn eventsByFloors={this.state.eventsByFloors} />
           <GridTimeColumn />
         </div>
       )
@@ -56,12 +54,12 @@ class EventsGrid extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  eventsInRoomsOnFloors: state.eventsInRoomsOnFloors,
+  eventsByFloors: state.eventsOnFloors,
   selectedDate: state.selectedDate
 })
 
 const mapDispatchToProps = {
-  getEventsInRoomsOnFloors: getEventsInRoomsOnFloors
+  getEventsByFloors: getEventsByFloors
 }
 
 

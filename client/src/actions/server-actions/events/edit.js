@@ -1,6 +1,5 @@
 export const EDIT_EVENT = "EDIT_EVENT";
 
-
 const editEventQuery  = `
 mutation editEvent($id: ID! $input: EventUpdateInput!, $addedUsersIds: [ID], $removedUsersIds: [ID] ) {
   updateEvent (id: $id, input: $input) { id }
@@ -29,7 +28,6 @@ const makeEditEventQuery = (eventData) => {
 
 export default function editEvent(eventData) {
   const {query, variables} = makeEditEventQuery(eventData);
-  debugger;
   return dispatch => {
     return fetch('/graphql', {
       method: 'post',
@@ -44,10 +42,10 @@ export default function editEvent(eventData) {
         return response.json();
       })
       .then((response) => {
-        const event = response.data.updateEvent;
+        const payload = response.data.updateEvent;
         dispatch({
           type: EDIT_EVENT,
-          event: event
+          payload
         })
       });
   }

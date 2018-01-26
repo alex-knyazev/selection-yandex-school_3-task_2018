@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import clearButtonImg from './../../assets/close.svg';
 
-import getRecommendations from '../../actions/server-actions/getRecommendationRooms';
+import getRecommendations from '../../actions/server-actions/recommendations/get';
 
 class ChoosedRoom extends Component {
   constructor(props) {
