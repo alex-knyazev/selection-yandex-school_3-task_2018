@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "add-free-time-between-ranges": "0.0.2",
     "classnames": "^2.2.5",
     "install": "^0.10.2",
     "moment": "^2.20.1",
