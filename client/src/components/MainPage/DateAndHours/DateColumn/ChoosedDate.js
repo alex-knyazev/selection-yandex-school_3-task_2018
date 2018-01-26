@@ -1,9 +1,9 @@
 import React from 'react'
-import moment from 'moment'
 
 import Calendar from './Calendar'
 
 import { MONTHS_SHORT } from '../../../../localizations/calendarLocalizatons'
+import isToday from '../../../../utils/isToday';
 
 const ChoosedDate = (props) => {
   const {
@@ -38,7 +38,7 @@ const ChoosedDate = (props) => {
 const getChoosedDateText = (selectedDate) => {
   let day = selectedDate.getDate();
   const month = selectedDate.getMonth();
-  const isToday = moment().isSame(selectedDate, 'day');
+  const isToday = isToday(selectedDate);
   let additionalPart = '';
   if (isToday) {
     additionalPart = 'Сегодня';
