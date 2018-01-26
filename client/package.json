@@ -6,7 +6,6 @@
     "add-free-time-between-ranges": "0.0.2",
     "classnames": "^2.2.5",
     "install": "^0.10.2",
-    "moment": "^2.20.1",
     "npm": "^5.6.0",
     "react": "^16.2.0",
     "react-day-picker": "^7.0.7",
