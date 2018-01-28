@@ -105,6 +105,21 @@ class CreateEvent extends Component {
     })
   }
 
+  clearRoom = () => {
+    const info = {
+      dateStart: this.state.newEventInfo.dateStart,
+      dateEnd: this.state.newEventInfo.dateEnd,
+      title: this.state.newEventInfo.title,
+      usersIds: this.state.newEventInfo.usersIds,
+    }
+    this.setState({
+      newEventInfo: info,
+      roomTitle: '',
+      floorTitle: '',
+      isRoomSelected: false
+    })
+  }
+
   render() {
     const {
       roomTitle,
@@ -158,6 +173,7 @@ class CreateEvent extends Component {
                 floorTitle={floorTitle}
                 dateStart={dateStart}
                 dateEnd={dateEnd}
+                clearRoom={this.clearRoom}
               /> 
               :
               <RecommendationsRooms 
@@ -165,6 +181,7 @@ class CreateEvent extends Component {
                 dateEnd={dateEnd}
                 usersIds={usersIds}
                 chooseRoom={this.chooseRoom}
+                isRoomSelected={isRoomSelected}
               /> 
             }
           </div>

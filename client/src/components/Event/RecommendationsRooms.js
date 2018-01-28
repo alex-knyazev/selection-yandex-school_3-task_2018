@@ -108,8 +108,6 @@ class Recommendation extends Component {
           <div><b>{time}</b></div>
           <div>{roomTitle} &#183; {floorTitle}</div>
         </div>
-        <div className="clearInfoButton"><img alt="reset choosed settings" src={clearButtonImg} />
-        </div>
       </div>
     )
   }
