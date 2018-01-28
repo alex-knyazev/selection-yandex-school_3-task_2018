@@ -59,7 +59,7 @@ function createData () {
   let threeHoursLater = new Date(twoHoursLater.getTime() + HOUR);
   let hour = [];
   for (let i = 0; i < 12; i++) {
-    const time = new Date(new Date().setHours((now.getHours() + i) - 8));
+    const time = new Date(new Date().setHours((now.getHours() + i) -7));
 
     hour[i] = time
   }

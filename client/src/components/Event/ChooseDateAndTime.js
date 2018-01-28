@@ -158,7 +158,7 @@ export default class ChooseDateAndTime extends Component {
     return (
       <div>
         <div className="chooseDate">
-          <span className="inputName">Дата</span>
+          <span className="inputTitle">Дата</span>
           <input type="text" value={dayText} onClick={this.handleChooseDateCalendarClick} />
           <div className="chooseDateCalendar" >
             {isShowCalendar
@@ -182,14 +182,14 @@ export default class ChooseDateAndTime extends Component {
         </div>
         <div className="chooseTime">
           <div className="startTime">
-            <span className="inputName">Начало</span>
+            <span className="inputTitle">Начало</span>
             <input type="text" value={startTimeText} onChange={this.handleStartTimeChange} />
           </div>
           <div className="separator">
             <span> &ndash; </span>
           </div>
           <div className="endTime">
-            <span className="inputName">Конец</span>
+            <span className="inputTitle">Конец</span>
             <input type="text" value={endTimeText} onChange={this.handleEndTimeChange} />
           </div>
         </div>

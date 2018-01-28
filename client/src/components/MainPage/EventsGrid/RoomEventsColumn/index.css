@@ -137,23 +137,23 @@
   }
 }
 
-.roomEventsColumn .roomSceduleWrapper .roomSchedule .emptyTime {
+.roomEventsColumn .roomSceduleWrapper .roomSchedule .freeTime {
   background-color: white;
   height: 28px;
   cursor: pointer;
 }
-.roomEventsColumn .roomSceduleWrapper .roomSchedule .emptyTime:hover {
+.roomEventsColumn .roomSceduleWrapper .roomSchedule .freeTime:hover {
   background-color: #2B50FD;
   transform: scaleY(1.05)
 }
 
 @media screen and (max-width: 764px) {
-  .roomEventsColumn .roomSceduleWrapper .roomSchedule .emptyTime {
+  .roomEventsColumn .roomSceduleWrapper .roomSchedule .freeTime {
     height: 100%;
   }
 }
 
-.roomEventsColumn .roomSceduleWrapper .roomSchedule .emptyTime .pluseSign {
+.roomEventsColumn .roomSceduleWrapper .roomSchedule .freeTime .pluseSign {
   width: 100%;
   height: 100%;
   color:white;
@@ -163,7 +163,7 @@
   margin-top: -3px;
 }
 @media screen and (max-width: 764px) {
-  .roomEventsColumn .roomSceduleWrapper .roomSchedule .emptyTime .pluseSign {
+  .roomEventsColumn .roomSceduleWrapper .roomSchedule .freeTime .pluseSign {
     margin-top: 8px;
   }
 }

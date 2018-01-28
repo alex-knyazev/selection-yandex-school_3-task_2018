@@ -31,7 +31,7 @@ export default class InputTitle extends Component {
   render() {
     return (
       <div>
-        <span className="inputName">Тема</span>
+        <span className="inputTitle">Тема</span>
         <input
           id="InputTitle"
           type="text"

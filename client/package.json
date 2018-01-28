@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "add-free-time-between-ranges": "0.0.5",
+    "add-free-time-between-ranges": "0.0.8",
     "classnames": "^2.2.5",
     "npm": "^5.6.0",
     "react": "^16.2.0",
@@ -18,7 +18,8 @@
     "react-spinners": "^0.2.5",
     "react-text-truncate": "^0.12.1",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "shallow-equal": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

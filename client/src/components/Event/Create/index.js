@@ -8,7 +8,7 @@ import InputTitle from '../InputTitle'
 import SelectMembers from '../SelectMembers'
 import ChooseDateAndTime from '../ChooseDateAndTime'
 import ChoosedRoom from '../ChoosedRoom'
-import RecommendationRooms from '../RecommendationRooms'
+import RecommendationsRooms from '../RecommendationsRooms'
 import Footer from './Footer'
 
 class CreateEvent extends Component {
@@ -19,7 +19,8 @@ class CreateEvent extends Component {
       newEventInfo: null,
       roomTitle: '',
       floorTitle: '',
-      isEventCreated: false
+      isEventCreated: false,
+      isRoomSelected: false
     }
     this.changeDates = this.changeDates.bind(this);
   }
@@ -28,8 +29,8 @@ class CreateEvent extends Component {
     this.props.getUsers();
     if (this.props.location.state) {
       const defaultInfo = {
-        dateStart: this.props.location.state.emptyTimeStart,
-        dateEnd: this.props.location.state.emptyTimeEnd,
+        dateStart: this.props.location.state.freeTimeStart,
+        dateEnd: this.props.location.state.freeTimeEnd,
         roomId: this.props.location.state.roomId,
         title: '',
         usersIds: [],
@@ -38,7 +39,8 @@ class CreateEvent extends Component {
         eventDefaultInfo: defaultInfo,
         newEventInfo: defaultInfo,
         roomTitle: this.props.location.state.roomTitle,
-        floorTitle: this.props.location.state.floorTitle
+        floorTitle: this.props.location.state.floorTitle,
+        isRoomSelected: true
       })
     }
     else {
@@ -87,11 +89,28 @@ class CreateEvent extends Component {
     this.props.createEvent(this.state.newEventInfo);
   }
 
+  chooseRoom = (roomInfo) => {
+    const info = {
+      dateStart: roomInfo.dateStart,
+      dateEnd: roomInfo.dateEnd,
+      roomId: roomInfo.roomId,
+      title: this.state.newEventInfo.title,
+      usersIds: this.state.newEventInfo.usersIds,
+    }
+    this.setState({
+      newEventInfo: info,
+      roomTitle: roomInfo.roomTitle,
+      floorTitle: roomInfo.floorTitle,
+      isRoomSelected: true
+    })
+  }
+
   render() {
     const {
       roomTitle,
       floorTitle,
-      newEventInfo
+      newEventInfo,
+      isRoomSelected
     } = this.state;
     const {
       dateStart,
@@ -103,7 +122,6 @@ class CreateEvent extends Component {
     const { allUsers, selectedDate } = this.props;
     return (
       <div className="editEvent">
-
         <div className="editEventGrid">
           <div className="editEventPageTitleBlock">
             <h1>Новая встреча</h1>
@@ -133,7 +151,7 @@ class CreateEvent extends Component {
           </div>
 
           <div className="choosedRoomBlock">
-            {roomId 
+            {isRoomSelected 
               ?
               <ChoosedRoom
                 roomTitle={roomTitle}
@@ -142,10 +160,11 @@ class CreateEvent extends Component {
                 dateEnd={dateEnd}
               /> 
               :
-              <RecommendationRooms 
+              <RecommendationsRooms 
                 dateStart={dateStart}
                 dateEnd={dateEnd}
                 usersIds={usersIds}
+                chooseRoom={this.chooseRoom}
               /> 
             }
           </div>

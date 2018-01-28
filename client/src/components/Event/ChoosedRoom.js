@@ -27,8 +27,8 @@ export default class ChoosedRoom extends Component {
     let time = this.makeTimeText();
     return (
       <div>
-        <span className="yourRoom">Ваша переговорка</span>
-        <div className="eventInfo">
+        <span className="inputTitle">Ваша переговорка</span>
+        <div className="eventInfo eventInfoChoosedRoom">
           <div>
             <div><b>{time}</b></div>
             <div>{roomTitle} &#183; {floorTitle}</div>

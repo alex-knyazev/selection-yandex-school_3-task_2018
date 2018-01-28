@@ -62,7 +62,7 @@ export default class SelectMembers extends Component {
     return (
       <div>
         <div className="selectMembers">
-          <span className="inputName">Участники</span>
+          <span className="inputTitle">Участники</span>
           <SearchInput
             className="selectMembersInput"
             onChange={this.searchUpdated}

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Redirect } from 'react-router-dom';
 
-export default class EmptyTime extends Component {
+export default class FreeTime extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,7 +23,7 @@ export default class EmptyTime extends Component {
     })
   }
 
-  handleEmptyTimeClick = () => {
+  handleFreeTimeClick = () => {
     this.setState({
       isClicked: true
     })
@@ -43,11 +43,11 @@ export default class EmptyTime extends Component {
     }
     return (
       <div
-        className="emptyTime"
+        className="freeTime"
         style={{ flexBasis: widthPercents + "%" }}
         onMouseOver={this.onMouseOver}
         onMouseLeave={this.onMouseLeave}
-        onClick={this.handleEmptyTimeClick}
+        onClick={this.handleFreeTimeClick}
       >
         {this.state.isHovered && isShowPlus
           ? <div className="pluseSign"> &#43; </div>

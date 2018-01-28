@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { addFreeTimeBetweenRanges } from 'add-free-time-between-ranges'
 
 import Event from './Event';
-import EmptyTime from './EmptyTime';
+import FreeTime from './FreeTime';
 
 class Room extends Component {
   constructor(props) {
@@ -50,8 +50,8 @@ class Room extends Component {
     const eventsData = this.props.roomData.events;
     const { startHour, endHour } = this.props.startAndEndHours;
     const roomEventsWithFreeTime = addFreeTimeBetweenRanges({
-      rangeDateStart: new Date(new Date().setHours(startHour, 0, 0, 0)),
-      rangeDateEnd: new Date(new Date().setHours(endHour, 0, 0, 0)),
+      rangeDateStart: new Date(this.props.selectedDate.setHours(startHour, 0, 0, 0)),
+      rangeDateEnd: new Date(this.props.selectedDate.setHours(endHour, 0, 0, 0)),
       timeSlots: eventsData,
       isSplitByHour: true
     })
@@ -64,7 +64,7 @@ class Room extends Component {
       const timeItem = roomEventsWithFreeTime[i];
       if (timeItem.isFree) {
         isFreeTimeInRoom = true;
-        const freeSlots = timeItem.freeSlots;
+        const freeSlots = timeItem.freeSlotsByHour;
         for (let y = 0; y < freeSlots.length; y++) {
           const freeSlot = freeSlots[y];
           const {
@@ -74,11 +74,11 @@ class Room extends Component {
           } = freeSlot;
           const widthPercents = durationInHours / (endHour - startHour) * 100;
           eventsElements.push(
-            <EmptyTime
-              key={"empty_time_" + i + "_" + y}
+            <FreeTime
+              key={"free_time_" + i + "_" + y}
               widthPercents={widthPercents}
-              emptyTimeStart={freeSlotDateStart}
-              emptyTimeEnd={freeSlotDateEnd}
+              freeTimeStart={freeSlotDateStart}
+              freeTimeEnd={freeSlotDateEnd}
               roomId={roomId}
               roomTitle={roomTitle}
               floorTitle={floorTitle}
