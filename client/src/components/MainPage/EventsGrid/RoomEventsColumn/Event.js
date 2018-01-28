@@ -70,8 +70,7 @@ class Event extends Component {
     } = this.props.eventData;
     const amountPeople = users.length
     const mentor = users[0];
-    let time = this.makeTimeText();
-
+    let time = this.makeTimeText();;
     return (
       <div
         className="event"

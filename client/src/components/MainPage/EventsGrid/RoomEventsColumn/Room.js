@@ -49,123 +49,55 @@ class Room extends Component {
   makeEventsElements = () => {
     const eventsData = this.props.roomData.events;
     const { startHour, endHour } = this.props.startAndEndHours;
-    const eventDataWithFreeTime = addFreeTimeBetweenRanges({
-      rangeDateStart: new Date(new Date().setHours(startHour,0,0,0)),
-      rangeDateEnd: new Date(new Date().setHours(endHour,0,0,0)),
+    const roomEventsWithFreeTime = addFreeTimeBetweenRanges({
+      rangeDateStart: new Date(new Date().setHours(startHour, 0, 0, 0)),
+      rangeDateEnd: new Date(new Date().setHours(endHour, 0, 0, 0)),
       timeSlots: eventsData,
       isSplitByHour: true
     })
-    debugger;
+    let eventsElements = [];
     const roomId = this.props.roomData.id;
     const roomTitle = this.props.roomData.title;
     const floorTitle = this.props.roomData.floor + ' этаж';
-
-    let eventsElements = [];
-    let isFullBusy = true;
-    if (!eventsData.length) {
-      const dayDateStart = new Date(this.props.selectedDate.setHours(startHour, 0, 0));
-      const dayDateEnd = new Date(this.props.selectedDate.setHours(endHour, 0, 0));
-      eventsElements.push(
-        <EmptyTime
-          key={"full_empty_time"}
-          widthPercents={100}
-          emptyTimeStart={dayDateStart}
-          emptyTimeEnd={dayDateEnd}
-          roomId={roomId}
-          roomTitle={roomTitle}
-          floorTitle={floorTitle}
-        />
-      )
-      isFullBusy = false;
-    }
-    //we assume that events of room are sorted by date
-    for (let i = 0; i < eventsData.length; i++) {
-      const event = eventsData[i];
-      let {
-        leftInsert,
-        rightInsert,
-      } = this.calculateEmptyTime(event, i);
-      if (leftInsert) {
+    let isFreeTimeInRoom = false;
+    for (let i = 0; i < roomEventsWithFreeTime.length; i++) {
+      const timeItem = roomEventsWithFreeTime[i];
+      if (timeItem.isFree) {
+        isFreeTimeInRoom = true;
+        const freeSlots = timeItem.freeSlots;
+        for (let y = 0; y < freeSlots.length; y++) {
+          const freeSlot = freeSlots[y];
+          const {
+            durationInHours,
+            freeSlotDateStart,
+            freeSlotDateEnd,
+          } = freeSlot;
+          const widthPercents = durationInHours / (endHour - startHour) * 100;
+          eventsElements.push(
+            <EmptyTime
+              key={"empty_time_" + i + "_" + y}
+              widthPercents={widthPercents}
+              emptyTimeStart={freeSlotDateStart}
+              emptyTimeEnd={freeSlotDateEnd}
+              roomId={roomId}
+              roomTitle={roomTitle}
+              floorTitle={floorTitle}
+            />
+          )
+        }
+      }
+      else {
         eventsElements.push(
-          <EmptyTime
-            key={"left_empty_time_" + i + "_" + event.title}
-            widthPercents={leftInsert.widthPercents}
-            emptyTimeStart={leftInsert.emptyTimeStart}
-            emptyTimeEnd={leftInsert.emptyTimeEnd}
-            roomId={roomId}
-            roomTitle={roomTitle}
+          <Event
+            key={"event" + i + "_" + timeItem.title}
+            eventData={timeItem}
             floorTitle={floorTitle}
           />
         )
-        isFullBusy = false;
-      }
-      eventsElements.push(
-        <Event
-          key={"event" + i + "_" + event.title}
-          eventData={event}
-          floorTitle={floorTitle}
-        />
-      )
-      if (rightInsert) {
-        eventsElements.push(
-          <EmptyTime
-            key={"right_empty_time_" + i + "_" + event.title}
-            widthPercents={rightInsert.widthPercents}
-            emptyTimeStart={rightInsert.emptyTimeStart}
-            emptyTimeEnd={rightInsert.emptyTimeEnd}
-            roomId={roomId}
-            roomTitle={roomTitle}
-            floorTitle={floorTitle}
-          />
-        )
-        isFullBusy = false;
       }
     }
+    let isFullBusy = !isFreeTimeInRoom;
     return { eventsElements, isFullBusy }
-  }
-
-  calculateEmptyTime = (event, index) => {
-    const { startHour, endHour } = this.props.startAndEndHours;
-    const eventsData = this.props.roomData.events;
-    const emptyTime = {
-      leftInsert: {},
-      rightInsert: {},
-    }
-    const eventDateStart = new Date(event.dateStart);
-    const eventDateEnd = new Date(event.dateEnd);
-    if (index === 0) {
-      const dayDateStart = new Date(new Date(event.dateStart).setHours(startHour, 0, 0))
-      if (eventDateStart > dayDateStart) {
-        let durationInHours = (eventDateStart - dayDateStart) / 1000 / 60 / 60;
-        emptyTime.leftInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
-        emptyTime.leftInsert.emptyTimeStart = dayDateStart;
-        emptyTime.leftInsert.emptyTimeEnd = eventDateStart;
-      }
-    }
-    else {
-      const previousEvent = eventsData[index - 1];
-      const {
-        dateEnd: dateEndPr,
-      } = previousEvent;
-      const previousEventDateEnd = new Date(dateEndPr);
-      if (dateEndPr !== eventDateStart) {
-        let durationInHours = (eventDateStart - previousEventDateEnd) / 1000 / 60 / 60;
-        emptyTime.leftInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
-        emptyTime.leftInsert.emptyTimeStart = previousEventDateEnd;
-        emptyTime.leftInsert.emptyTimeEnd = eventDateStart;
-      }
-    }
-
-    if (index === eventsData.length - 1) {
-      const dayDateEnd = new Date(new Date(event.dateEnd).setHours(endHour, 0, 0))
-      if (eventDateEnd < dayDateEnd) {
-        let durationInHours = (dayDateEnd - eventDateEnd) / 1000 / 60 / 60;
-        emptyTime.rightInsert.widthPercents = durationInHours / (endHour - startHour) * 100;
-        emptyTime.rightInsert.emptyTimeStart = eventDateEnd;
-        emptyTime.rightInsert.emptyTimeEnd = dayDateEnd;
-      }
-    }
-    return emptyTime;
   }
 
   render() {
