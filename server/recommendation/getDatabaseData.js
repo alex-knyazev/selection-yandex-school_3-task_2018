@@ -43,7 +43,11 @@ const getDatabaseData = async (data) => {
   const allEvents = [];
   const allRooms = [];
   return new Promise((res, rej) => {
-    res(result.data);
+    request(options).then((result) => {
+      result = JSON.parse(result);
+      return res(result.data);
+    })
+    
   })
 
 
