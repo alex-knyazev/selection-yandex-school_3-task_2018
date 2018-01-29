@@ -10,13 +10,15 @@ import InputTitle from '../InputTitle'
 import SelectMembers from '../SelectMembers'
 import ChooseDateAndTime from '../ChooseDateAndTime'
 import ChoosedRoom from '../ChoosedRoom'
+import RecommendationsRooms from '../RecommendationsRooms'
 import Footer from './Footer'
 
 class EditEvent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isRedirectToMain: false
+      isRedirectToMain: false,
+      isRoomSelected: false
     }
   }
 
@@ -35,7 +37,8 @@ class EditEvent extends Component {
         eventDefaultInfo: { ...defaultInfo },
         newEventInfo: { ...defaultInfo },
         roomTitle: this.props.location.state.room.title,
-        floorTitle: this.props.location.state.floorTitle
+        floorTitle: this.props.location.state.floorTitle,
+        isRoomSelected: true
       })
     }
     else {
@@ -46,7 +49,7 @@ class EditEvent extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.eventMutation !== this.props.eventMutation ) {
+    if (nextProps.eventMutation !== this.props.eventMutation) {
       this.setState({
         isRedirectToMain: true
       })
@@ -72,7 +75,6 @@ class EditEvent extends Component {
     this.setState({
       newEventInfo: Object.assign(this.state.newEventInfo, { usersIds })
     })
-
   }
 
   findAddedAndRemovedUsers = () => {
@@ -122,12 +124,50 @@ class EditEvent extends Component {
     if (changedDateEnd) {
       changedFields.event.dateEnd = changedDateEnd
     }
+    const changedRoomId = this.findChangedField('roomId');
+    if (changedRoomId) {
+      changedFields.roomId = changedRoomId
+    }
     return changedFields;
+  }
+
+  chooseRoom = (roomInfo) => {
+    const info = {
+      id: this.state.newEventInfo.id,
+      dateStart: roomInfo.dateStart,
+      dateEnd: roomInfo.dateEnd,
+      roomId: roomInfo.roomId,
+      title: this.state.newEventInfo.title,
+      usersIds: this.state.newEventInfo.usersIds,
+    }
+    this.setState({
+      newEventInfo: info,
+      roomTitle: roomInfo.roomTitle,
+      floorTitle: roomInfo.floorTitle,
+      isRoomSelected: true
+    })
+  }
+
+  clearRoom = () => {
+    const info = {
+      id: this.state.newEventInfo.id,
+      dateStart: this.state.newEventInfo.dateStart,
+      dateEnd: this.state.newEventInfo.dateEnd,
+      title: this.state.newEventInfo.title,
+      usersIds: this.state.newEventInfo.usersIds,
+    }
+    this.setState({
+      newEventInfo: info,
+      roomTitle: '',
+      floorTitle: '',
+      isRoomSelected: false
+    })
   }
 
   handleEditEvent = () => {
     const changedFields = this.findChangedFields();
     if (Object.keys(changedFields).length > 1 || Object.keys(changedFields.event).length) {
+      debugger;
       this.props.editEvent(Object.assign(changedFields, { id: this.state.newEventInfo.id }));
     }
     else {
@@ -138,7 +178,7 @@ class EditEvent extends Component {
   }
 
   handleDeleteEvent = () => {
-    this.props.deleteEvent({id: this.state.newEventInfo.id });
+    this.props.deleteEvent({ id: this.state.newEventInfo.id });
   }
 
   render() {
@@ -148,7 +188,8 @@ class EditEvent extends Component {
     const {
       roomTitle,
       floorTitle,
-      newEventInfo
+      newEventInfo,
+      isRoomSelected
     } = this.state;
     const {
       dateStart,
@@ -189,12 +230,24 @@ class EditEvent extends Component {
           </div>
 
           <div className="choosedRoomBlock">
-            <ChoosedRoom
-              roomTitle={roomTitle}
-              floorTitle={floorTitle}
-              dateStart={dateStart}
-              dateEnd={dateEnd}
-            />
+            {isRoomSelected
+              ?
+              <ChoosedRoom
+                roomTitle={roomTitle}
+                floorTitle={floorTitle}
+                dateStart={dateStart}
+                dateEnd={dateEnd}
+                clearRoom={this.clearRoom}
+              />
+              :
+              <RecommendationsRooms
+                dateStart={dateStart}
+                dateEnd={dateEnd}
+                usersIds={usersIds}
+                chooseRoom={this.chooseRoom}
+                isRoomSelected={isRoomSelected}
+              />
+            }
           </div>
         </div>
         <div className="footer">

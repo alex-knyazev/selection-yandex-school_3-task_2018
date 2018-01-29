@@ -46,7 +46,7 @@ export default class ChooseDateAndTime extends Component {
   }
 
   componentWillUpdate = (nextProps, nextState) => {
-    if (nextState.dateStart !== this.props.dateStart && nextState.dateEnd !== this.props.dateEnd) {
+    if (nextState.dateStart !== this.props.dateStart || nextState.dateEnd !== this.props.dateEnd) {
       this.props.changeDates(nextState.dateStart, nextState.dateEnd)
     }
   }

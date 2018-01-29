@@ -89,7 +89,6 @@ class CreateEvent extends Component {
   }
 
   chooseRoom = (roomInfo) => {
-    debugger;
     const info = {
       dateStart: roomInfo.dateStart,
       dateEnd: roomInfo.dateEnd,

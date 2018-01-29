@@ -36,77 +36,53 @@ function createData () {
       floor: 2
     },
     {
-      title: 'Ствола',
+      title: '2 Ствола',
       capacity: 2,
       floor: 2
     },
     {
-      title: '14',
+      title: 'У Клинта Иствуда',
       capacity: 6,
-      floor: 3
+      floor: 1
     },
-    {
-      title: 'myRoom',
-      capacity: 2,
-      floor: 2
-    }
   ]);
 
   const HOUR = 60 * 60 * 1000;
-  let now = new Date();
-  let oneHourLater = new Date(now.getTime() + HOUR);
-  let twoHoursLater = new Date(oneHourLater.getTime() + HOUR);
-  let threeHoursLater = new Date(twoHoursLater.getTime() + HOUR);
-  let hour = [];
-  for (let i = 0; i < 12; i++) {
-    const time = new Date(new Date().setHours((now.getHours() + i) -7));
-    hour[i] = time
+  let hours = [];
+  for (let i = 0; i < 15; i++) {
+    const time = new Date(new Date().setHours(i + 8, 20, 0));
+    hours[i] = time
   }
   let eventsPromise = models.Event.bulkCreate([
     {
       title: 'ШРИ 2018 - начало',
-      dateStart: now,
-      dateEnd: oneHourLater
+      dateStart: hours[0],
+      dateEnd: hours[1]
     },
     {
       title: '👾 Хакатон 👾',
-      dateStart: oneHourLater,
-      dateEnd: twoHoursLater
+      dateStart: hours[1],
+      dateEnd: hours[2]
     },
     {
       title: '🍨 Пробуем kefir.js',
-      dateStart: hour[0],
-      dateEnd: hour[1]
+      dateStart: hours[0],
+      dateEnd: hours[1]
     },
     {
-      title: 'Тестируем продукт1',
-      dateStart: hour[1],
-      dateEnd: hour[2]
+      title: 'Скажи фронтендер сколько стоит твоя жизнь',
+      dateStart: hours[2],
+      dateEnd: hours[3]
     },
     {
-      title: 'Тестируем продукт2',
-      dateStart: hour[2],
-      dateEnd: hour[3]
+      title: 'Поиск человека, который тайно поддерживает IE6',
+      dateStart: hours[4],
+      dateEnd: hours[5]
     },
     {
-      title: 'Тестируем продукт4',
-      dateStart: hour[3],
-      dateEnd: hour[4]
-    },
-    {
-      title: 'Тестируем продукт5',
-      dateStart: hour[5],
-      dateEnd: hour[6]
-    },
-    {
-      title: 'Тестируем продукт6',
-      dateStart: hour[8],
-      dateEnd: hour[9]
-    },
-    {
-      title: 'Тестируем продукт6',
-      dateStart: hour[9],
-      dateEnd: hour[10]
+      title: 'Почему ты не нравишься Джеку Арчибальду',
+      dateStart: hours[6],
+      dateEnd: hours[7]
     },
     
   ]);
@@ -123,12 +99,9 @@ function createData () {
       promises.push(events[1].setRoom(rooms[1]));
       promises.push(events[2].setRoom(rooms[2]));
 
-      promises.push(events[3].setRoom(rooms[5]));
-      promises.push(events[4].setRoom(rooms[5]));
-      promises.push(events[5].setRoom(rooms[5]));
-      promises.push(events[6].setRoom(rooms[5]));
-      promises.push(events[7].setRoom(rooms[5]));
-      promises.push(events[8].setRoom(rooms[5]));
+      promises.push(events[3].setRoom(rooms[4]));
+      promises.push(events[4].setRoom(rooms[4]));
+      promises.push(events[5].setRoom(rooms[4]));
 
       promises.push(events[0].setUsers([users[0], users[1]]));
       promises.push(events[1].setUsers([users[1], users[2]]));

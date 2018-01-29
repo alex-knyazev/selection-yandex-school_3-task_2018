@@ -23,13 +23,14 @@ const makeEditEventQuery = (eventData) => {
   const addedUsersIds = eventData.addedUsers || [];
   const removedUsersIds = eventData.removedUsers || [];
   const roomId = eventData.roomId || null;
+  debugger;
   let query = editEventQueryWithRoom;
   if(!roomId) {
     query = editEventQuery
   }
   if(eventData.event) {
     return {
-      query: editEventQuery,
+      query,
       variables: {
         id,
         input,
