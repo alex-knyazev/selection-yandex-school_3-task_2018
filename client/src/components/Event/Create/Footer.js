@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom';
-import Modal from 'react-modal';
+import { Link, Redirect } from 'react-router-dom'
+import Modal from 'react-modal'
 
+import { MONTHS_SHORT } from '../../../localizations/calendarLocalizatons'
+import isToday from '../../../utils/isToday'
+import makeTimeText from '../../../utils/makeTimeText'
 
-import congratulationsImg from '../../../assets/congrtulations.png';
+import congratulationsImg from '../../../assets/congrtulations.png'
 
 export default class Footer extends Component {
   constructor(props) {
@@ -31,7 +34,6 @@ export default class Footer extends Component {
     }
     return (
       <div>
-
         <button className="cancelButton" onClick={this.handleCancelButtonClick}>
           <Link to="/">
             <b>Отмена</b>
@@ -39,13 +41,57 @@ export default class Footer extends Component {
         </button>
 
         <button className="saveButton" onClick={this.handleSaveButtonClick}><b>Создать встречу</b></button>
-        <EventCreatedModal isOpen={this.props.isEventCreated} handleOkButtonClick={this.handleOkButtonClick} />
+        <EventCreatedModal
+          isOpen={this.props.isEventCreated}
+          handleOkButtonClick={this.handleOkButtonClick}
+          dateStart={this.props.dateStart}
+          dateEnd={this.props.dateEnd}
+          roomTitle={this.props.roomTitle}
+          floorTitle={this.props.floorTitle}
+        />
       </div>
     )
   }
 }
 
-const EventCreatedModal = ({ isOpen, handleOkButtonClick }) => {
+const EventCreatedModal = (props) => {
+
+  const getChoosedDateText = () => {
+    const selectedDate = new Date(props.dateStart);
+    if(!selectedDate) {
+      return '';
+    }
+    let day = selectedDate.getDate();
+    const month = selectedDate.getMonth();
+    const isDateToday = isToday(selectedDate);
+    let additionalPart = '';
+    if (isDateToday) {
+      additionalPart = 'Сегодня';
+    }
+    if (day.toString().length === 1) {
+      day = "0" + day
+    }
+    return {
+      dateText: day + ' ' + MONTHS_SHORT[month],
+      additionalPart: additionalPart
+    }
+  }
+
+  const {
+    isOpen,
+    handleOkButtonClick,
+    dateStart,
+    dateEnd,
+    roomTitle,
+    floorTitle
+  } = props;
+
+  const time = makeTimeText([dateStart,dateEnd]);
+  const { 
+    dateText,
+    additionalPart
+  } = getChoosedDateText();
+  
   return (
     <Modal
       isOpen={isOpen}
@@ -63,9 +109,11 @@ const EventCreatedModal = ({ isOpen, handleOkButtonClick }) => {
     >
       <img alt="" src={congratulationsImg} />
       <h1>Всреча создана!</h1>
-      <p>14 декабря, 15:00 - 17:00</p>
-      <p>Готем &#183; 4 этаж</p>
+      <p>{dateText} &#183; {additionalPart},  {time}</p>
+      <p>{roomTitle} &#183; {floorTitle}</p>
       <button className="okButton" onClick={handleOkButtonClick}><b>Хорошо</b></button>
     </Modal>
   )
 }
+
+

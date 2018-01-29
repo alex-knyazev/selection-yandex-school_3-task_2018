@@ -8,11 +8,25 @@ mutation editEvent($id: ID! $input: EventUpdateInput!, $addedUsersIds: [ID], $re
 }
 `
 
+const editEventQueryWithRoom  = `
+mutation editEvent($id: ID! $input: EventUpdateInput!, $addedUsersIds: [ID], $removedUsersIds: [ID], $roomId: ID! ) {
+  updateEvent (id: $id, input: $input) { id }
+  addUsersToEvent (id: $id, usersIds: $addedUsersIds) { id }
+  removeUsersFromEvent (id: $id, usersIds: $removedUsersIds) {id }
+  changeEventRoom(id: $id, roomId: $roomId) { id }
+}
+`
+
 const makeEditEventQuery = (eventData) => {
   const id = eventData.id;
   const input = eventData.event;
   const addedUsersIds = eventData.addedUsers || [];
   const removedUsersIds = eventData.removedUsers || [];
+  const roomId = eventData.roomId || null;
+  let query = editEventQueryWithRoom;
+  if(!roomId) {
+    query = editEventQuery
+  }
   if(eventData.event) {
     return {
       query: editEventQuery,
@@ -20,7 +34,8 @@ const makeEditEventQuery = (eventData) => {
         id,
         input,
         addedUsersIds,
-        removedUsersIds
+        removedUsersIds,
+        roomId
       }
     }
   }

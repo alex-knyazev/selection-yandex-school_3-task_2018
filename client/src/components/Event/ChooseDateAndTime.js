@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import DayPicker from 'react-day-picker';
 
+import makeTimeText from '../../utils/makeTimeText'
+
 import 'react-day-picker/lib/style.css';
 
 import {
@@ -30,8 +32,8 @@ export default class ChooseDateAndTime extends Component {
         dayDate: this.props.dateStart,
         dateStart: this.props.dateStart,
         dateEnd: this.props.dateEnd,
-        startTimeText: this.makeTimeText(this.props.dateStart),
-        endTimeText: this.makeTimeText(this.props.dateEnd),
+        startTimeText: makeTimeText([this.props.dateStart]),
+        endTimeText: makeTimeText([this.props.dateEnd]),
         dayText: this.makeDayText(this.props.dateStart),
       })
     }
@@ -41,7 +43,6 @@ export default class ChooseDateAndTime extends Component {
         dayText: this.makeDayText(this.props.selectedDate),
       })
     }
-
   }
 
   componentWillUpdate = (nextProps, nextState) => {
@@ -126,12 +127,6 @@ export default class ChooseDateAndTime extends Component {
       }
     }
     return undefined;
-  }
-
-  makeTimeText = (date) => {
-    const hours = this.addZeroIfNeed(date.getHours());
-    const minutes = this.addZeroIfNeed(date.getMinutes());
-    return hours + ":" + minutes;
   }
 
   makeDayText = (date) => {

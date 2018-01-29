@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 
+import makeTimeText from '../../../../utils/makeTimeText'
+
 import EventTooltip from './EventTooltip';
 
 class Event extends Component {
@@ -23,21 +25,6 @@ class Event extends Component {
     let durationInHours = (dateEnd - dateStart) / 1000 / 60 / 60;
     widthPercents = durationInHours / (endHour - startHour) * 100;
     return widthPercents;
-  }
-
-  makeTimeText = () => {
-    let {
-      dateStart,
-      dateEnd
-    } = this.props.eventData;
-    const addZeroIfNeed = (time) => time < 10 ? "0" + time : time;
-    dateStart = new Date(dateStart);
-    dateEnd = new Date(dateEnd);
-    const hoursStart = addZeroIfNeed(dateStart.getHours());
-    const minutesStart = addZeroIfNeed(dateStart.getMinutes());
-    const hoursEnd = addZeroIfNeed(dateEnd.getHours());
-    const minutesEnd = addZeroIfNeed(dateEnd.getMinutes());
-    return hoursStart + ":" + minutesStart + " - " + hoursEnd + ":" + minutesEnd
   }
 
   handleEventClick = () => {
@@ -67,10 +54,12 @@ class Event extends Component {
       title,
       room,
       users,
+      dateStart,
+      dateEnd
     } = this.props.eventData;
     const amountPeople = users.length
     const mentor = users[0];
-    let time = this.makeTimeText();;
+    let time = makeTimeText([dateStart, dateEnd]);
     return (
       <div
         className="event"

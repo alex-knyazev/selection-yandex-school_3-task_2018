@@ -1,22 +1,10 @@
 import React, { Component } from 'react'
 
-import clearButtonImg from './../../assets/close-white.svg';
+import makeTimeText from '../../utils/makeTimeText'
+
+import clearButtonImg from './../../assets/close-white.svg'
 
 export default class ChoosedRoom extends Component {
-  makeTimeText = () => {
-    let {
-      dateStart,
-      dateEnd
-    } = this.props;
-    const addZeroIfNeed = (time) => time < 10 ? "0" + time : time;
-    dateStart = new Date(dateStart);
-    dateEnd = new Date(dateEnd);
-    const hoursStart = addZeroIfNeed(dateStart.getHours());
-    const minutesStart = addZeroIfNeed(dateStart.getMinutes());
-    const hoursEnd = addZeroIfNeed(dateEnd.getHours());
-    const minutesEnd = addZeroIfNeed(dateEnd.getMinutes());
-    return hoursStart + ":" + minutesStart + " - " + hoursEnd + ":" + minutesEnd
-  }
 
   render() {
     let {
@@ -24,7 +12,7 @@ export default class ChoosedRoom extends Component {
       floorTitle
     } = this.props;
 
-    let time = this.makeTimeText();
+    let time = makeTimeText([this.props.dateStart, this.props.dateEnd]);
     return (
       <div>
         <span className="inputTitle">Ваша переговорка</span>

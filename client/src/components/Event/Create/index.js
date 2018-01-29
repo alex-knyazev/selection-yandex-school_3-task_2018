@@ -45,7 +45,6 @@ class CreateEvent extends Component {
     }
     else {
       const defaultInfo = {
-        dateStart: this.props.selectedDate,
         usersIds: []
       }
       this.setState({
@@ -90,6 +89,7 @@ class CreateEvent extends Component {
   }
 
   chooseRoom = (roomInfo) => {
+    debugger;
     const info = {
       dateStart: roomInfo.dateStart,
       dateEnd: roomInfo.dateEnd,
@@ -192,6 +192,10 @@ class CreateEvent extends Component {
           <Footer
             isEventCreated={this.state.isEventCreated}
             handleCreateEvent={this.handleCreateEvent}
+            dateStart={dateStart}
+            dateEnd={dateEnd}
+            roomTitle={roomTitle}
+            floorTitle={floorTitle}
           />
         </div>
       </div>
