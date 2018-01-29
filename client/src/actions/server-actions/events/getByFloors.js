@@ -37,7 +37,12 @@ export default function getEventsInRooms(date) {
       }
     })
       .then(response => {
-        return response.json();
+        if(response.ok) {
+          return response.json();
+        }
+        else {
+          return Promise.reject()
+        }
       })
       .then((response) => {
         const payload = findEventsInRoomsOnFloors(response, date);

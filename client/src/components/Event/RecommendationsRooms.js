@@ -17,9 +17,12 @@ class RecommendationsRooms extends Component {
   componentWillMount = () => {
     const {
       dateStart,
-      dateEnd
+      dateEnd,
+      usersIds
     } = this.props;
-
+    if(dateStart && dateEnd) {
+      this.props.getRecommendations({ dateStart, dateEnd, usersIds });
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -45,14 +48,15 @@ class RecommendationsRooms extends Component {
     const { recommendations } = this.state;
     const { dateStart, dateEnd } = this.props;
     let recommendationsElements = recommendations.map((recommendation, i) => {
-      return (<Recommendation
-        dateStart={dateStart}
-        dateEnd={dateEnd}
-        roomId={recommendation.id}
-        roomTitle={recommendation.title}
-        floorTitle={recommendation.floor + " этаж"}
-        chooseRoom={this.props.chooseRoom}
-      />
+      return (
+        <Recommendation
+          dateStart={dateStart}
+          dateEnd={dateEnd}
+          roomId={recommendation.id}
+          roomTitle={recommendation.title}
+          floorTitle={recommendation.floor + " этаж"}
+          chooseRoom={this.props.chooseRoom}
+        />
       )
     })
     return recommendationsElements;
@@ -63,7 +67,7 @@ class RecommendationsRooms extends Component {
       dateStart,
       dateEnd
     } = this.props;
-    if (!this.state.recommendations.length) {
+    if (!dateStart || !dateEnd) {
       return <RecommendationMessage />
     }
     const recommendationsElements = this.makeRecommendationsElements();

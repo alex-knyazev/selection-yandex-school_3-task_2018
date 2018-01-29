@@ -3,9 +3,11 @@ import { GET_EVENTS_BY_FLOORS } from '../../actions/server-actions/events/getByF
 const initialState = [];
 
 export default (state = initialState, action = {}) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_EVENTS_BY_FLOORS:
-            return action.payload;
+            if (action.payload) {
+                return action.payload;
+            }
         default:
             return state;
     }

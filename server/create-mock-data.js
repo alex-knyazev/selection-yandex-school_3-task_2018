@@ -60,7 +60,6 @@ function createData () {
   let hour = [];
   for (let i = 0; i < 12; i++) {
     const time = new Date(new Date().setHours((now.getHours() + i) -7));
-
     hour[i] = time
   }
   let eventsPromise = models.Event.bulkCreate([
